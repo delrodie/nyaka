@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Vicariat{% endblock %}
+
+{% block body %}
+    <h1>Vicariat</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ vicariat.id }}</td>
+            </tr>
+            <tr>
+                <th>Code</th>
+                <td>{{ vicariat.code }}</td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>{{ vicariat.nom }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_backend_vicariat_index') }}">back to list</a>
+
+    <a href="{{ path('app_backend_vicariat_edit', {'id': vicariat.id}) }}">edit</a>
+
+    {{ include('backend_vicariat/_delete_form.html.twig') }}
+{% endblock %}

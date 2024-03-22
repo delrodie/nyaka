@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Vicariat{% endblock %}
+
+{% block body %}
+    <h1>Create new Vicariat</h1>
+
+    {{ include('backend_vicariat/_form.html.twig') }}
+
+    <a href="{{ path('app_backend_vicariat_index') }}">back to list</a>
+{% endblock %}
