@@ -1,0 +1,86 @@
+/*L-desktop*/
+
+@media (min-device-width:  1600px)
+{
+    .activite{
+        &-icon{
+            max-width: 500px;
+            margin: 25px auto;
+        }
+
+        .call-action{
+            margin-top: 1000px;
+
+            a{
+                &.btnAction{
+                    padding: 30px 50px;
+                }
+            }
+        }
+    }
+}
+
+/*L-laptops*/
+@media (max-width: 1440px)
+{
+    .activite{
+        &-icon{
+            max-width: 500px;
+        }
+    }
+}
+
+/*laptops/tablets*/
+@media (max-width: 1024px)
+{
+    .activite{
+        &-icon{
+            max-width: 500px;
+            margin: 0 auto;
+        }
+    }
+  
+}
+
+
+/*tablets*/
+@media (max-width: 768px)
+{
+    .activite{
+
+        &-icon{
+            max-width: 500px !important;
+            margin: 0 auto;
+        }
+    }
+
+}
+
+
+/*Smart phone*/
+@media (max-width: 576px)
+{
+    .logo{
+
+        h2{
+            font-size: 1.1rem;
+
+            &.titre-activite{
+                font-size: 1.3rem;
+                text-transform: uppercase;
+            }
+        }
+
+        h3{
+            font-size: .9rem;
+        }
+
+        img{
+            width: 100px;
+
+            &.activite{
+                width: 125px;
+            }
+        }
+    }
+}
