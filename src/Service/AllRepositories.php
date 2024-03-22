@@ -20,4 +20,19 @@ class AllRepositories
 
         return $this->vicariatRepository->findOneBy([],['id' => "DESC"]);
     }
+
+    /**
+     * Liste des vicariats
+     *
+     * @param $order
+     * @return \App\Entity\Vicariat[]
+     */
+    public function getAllVicariat($order = null)
+    {
+        if ($order){
+            return $this->vicariatRepository->findBy([],['nom' => $order]);
+        }
+
+        return $this->vicariatRepository->findAll();
+    }
 }
