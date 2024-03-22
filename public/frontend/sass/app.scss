@@ -47,44 +47,41 @@ body{
     }
 }
 
-.accueil{
+.activite{
+    text-align: center;
 
-    .activite{
-        text-align: center;
-
-        &-text{
-            .titre{
-                text-transform: uppercase;
-                color: var(--text-bleu);
-            }
-
-            .theme{
-                font-style: italic;
-                color: var(--text-bleu-secondaire);
-            }
-
-            .date{
-                font-size: 0.8rem;
-                color: gray;
-            }
+    &-text{
+        .titre{
+            text-transform: uppercase;
+            color: var(--text-bleu);
         }
 
-        .call-action{
-            margin-top: 50px;
+        .theme{
+            font-style: italic;
+            color: var(--text-bleu-secondaire);
+        }
 
-            a{
-                text-decoration: none;
+        .date{
+            font-size: 0.8rem;
+            color: gray;
+        }
+    }
 
-                &.btnAction{
-                    background: rgb(0, 172, 239);
-                    color: white;
-                    font-weight: bold;
-                    padding: 20px 45px;
-                    border-radius: 5px;
+    .call-action{
+        //margin-top: 50px;
 
-                    &:hover{
-                        background: var(--text-bleu-hover);
-                    }
+        a{
+            text-decoration: none;
+
+            &.btnAction{
+                background: rgb(0, 172, 239);
+                color: white;
+                font-weight: bold;
+                padding: 20px 45px;
+                border-radius: 5px;
+
+                &:hover{
+                    background: var(--text-bleu-hover);
                 }
             }
         }

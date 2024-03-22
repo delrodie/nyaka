@@ -30,29 +30,27 @@ body {
     max-width: 120px;
     height: auto; }
 
-.accueil .activite {
+.activite {
   text-align: center; }
-  .accueil .activite-text .titre {
+  .activite-text .titre {
     text-transform: uppercase;
     color: var(--text-bleu); }
-  .accueil .activite-text .theme {
+  .activite-text .theme {
     font-style: italic;
     color: var(--text-bleu-secondaire); }
-  .accueil .activite-text .date {
+  .activite-text .date {
     font-size: 0.8rem;
     color: gray; }
-  .accueil .activite .call-action {
-    margin-top: 50px; }
-    .accueil .activite .call-action a {
-      text-decoration: none; }
-      .accueil .activite .call-action a.btnAction {
-        background: #00acef;
-        color: white;
-        font-weight: bold;
-        padding: 20px 45px;
-        border-radius: 5px; }
-        .accueil .activite .call-action a.btnAction:hover {
-          background: var(--text-bleu-hover); }
+  .activite .call-action a {
+    text-decoration: none; }
+    .activite .call-action a.btnAction {
+      background: #00acef;
+      color: white;
+      font-weight: bold;
+      padding: 20px 45px;
+      border-radius: 5px; }
+      .activite .call-action a.btnAction:hover {
+        background: var(--text-bleu-hover); }
 
 .formulaire h2.titre {
   color: var(--text-bleu);
