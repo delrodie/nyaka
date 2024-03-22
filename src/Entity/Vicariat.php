@@ -3,11 +3,11 @@
 namespace App\Entity;
 
 use App\Repository\VicariatRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: VicariatRepository::class)]
-//#[UniqueEntity('slug')]
 class Vicariat
 {
     #[ORM\Id]
@@ -23,6 +23,14 @@ class Vicariat
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $slug = null;
+
+    #[ORM\OneToMany(targetEntity: Doyenne::class, mappedBy: 'vicariat')]
+    private Collection $doyennes;
+
+    public function __construct()
+    {
+        $this->doyennes = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -64,4 +72,36 @@ class Vicariat
 
         return $this;
     }
+
+    /**
+     * @return Collection<int, Doyenne>
+     */
+    public function getDoyennes(): Collection
+    {
+        return $this->doyennes;
+    }
+
+    public function addDoyenne(Doyenne $doyenne): static
+    {
+        if (!$this->doyennes->contains($doyenne)) {
+            $this->doyennes->add($doyenne);
+            $doyenne->setVicariat($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDoyenne(Doyenne $doyenne): static
+    {
+        if ($this->doyennes->removeElement($doyenne)) {
+            // set the owning side to null (unless already changed)
+            if ($doyenne->getVicariat() === $this) {
+                $doyenne->setVicariat(null);
+            }
+        }
+
+        return $this;
+    }
+
+
 }

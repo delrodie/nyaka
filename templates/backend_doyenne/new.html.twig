@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Doyenne{% endblock %}
+
+{% block body %}
+    <h1>Create new Doyenne</h1>
+
+    {{ include('backend_doyenne/_form.html.twig') }}
+
+    <a href="{{ path('app_backend_doyenne_index') }}">back to list</a>
+{% endblock %}

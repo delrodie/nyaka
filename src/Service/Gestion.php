@@ -43,6 +43,50 @@ class Gestion
     }
 
     /**
+     * Generation de code de Doyenne
+     *
+     * @param $vicariat
+     * @return false|string
+     */
+    public function codeDoyenne($vicariat): bool|string
+    {
+        $lastDoyenne = $this->allRepositories->getOneDoyenne();
+
+        if (!$vicariat) return false;
+
+        if (!$lastDoyenne) return (int) $vicariat->getCode() .''. 10;
+
+        $suffixe = substr($lastDoyenne->getCode(), -2);
+
+        return (int) $vicariat->getCode().''.(int) $suffixe + 1;
+    }
+
+    /**
+     * Mise a jour du code de doyenne
+     * 
+     * @param $vicariat
+     * @param $doyenne
+     * @return string
+     */
+    public function updateCodeDoyenne($vicariat, $doyenne): string
+    {
+        return (int) $vicariat->getCode().''.substr($doyenne->getCode(), -2);
+    }
+
+    /**
+     * L'unicité de doyenne
+     *
+     * @param $slug
+     * @return bool
+     */
+    public function uniciteDoyenne($slug): bool
+    {
+        $exist = $this->allRepositories->getOneDoyenne($slug);
+        if (!$exist) return false;
+        return true;
+    }
+
+    /**
      * Formattage slug
      * @param string $string
      * @return \Symfony\Component\String\AbstractUnicodeString

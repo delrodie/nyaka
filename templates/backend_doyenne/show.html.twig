@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Doyenne{% endblock %}
+
+{% block body %}
+    <h1>Doyenne</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ doyenne.id }}</td>
+            </tr>
+            <tr>
+                <th>Code</th>
+                <td>{{ doyenne.code }}</td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>{{ doyenne.nom }}</td>
+            </tr>
+            <tr>
+                <th>Slug</th>
+                <td>{{ doyenne.slug }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_backend_doyenne_index') }}">back to list</a>
+
+    <a href="{{ path('app_backend_doyenne_edit', {'id': doyenne.id}) }}">edit</a>
+
+    {{ include('backend_doyenne/_delete_form.html.twig') }}
+{% endblock %}
