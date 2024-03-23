@@ -26,7 +26,7 @@
                 <div class="form-group row">
                     <div class="col-12 mt-3">
                         <label for="vicariat">Vicariat</label>
-                        <select name="vicariat" id="vicariat" class="form-select form-select-lg" data-placeholder="Selectionnez votre vicariat">
+                        <select name="selectVicariat" id="selectVicariat" class="form-select form-select-lg" data-placeholder="Selectionnez votre vicariat">
                             <option value=""></option>
                             {% for vicariat in vicariats %}
                                 <option value="{{ vicariat.id }}">{{ vicariat.nom }}</option>
@@ -36,8 +36,6 @@
                     <div class="col-12 mt-3">
                         <label for="selectDoyenne">Doyenne</label>
                         <select name="selectDoyenne" id="selectDoyenne" class="form-select form-select-lg">
-                            <option value=""></option>
-                            <option value="">Doyenne</option>
                         </select>
                     </div>
                     <div class="col-12 mt-3">
@@ -66,11 +64,37 @@
 {% block javascripts %}
     {{ parent() }}
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
     <script>
+        $(document).ready(function() {
+            $('#selectVicariat').on('change', function(){
+                let vicariatId = $(this).val();
+                console.log(vicariatId);
+                $.getJSON("{{ absolute_url(path('app_api_doyenne_list')) }}", {'vicariat_id': vicariatId})
+                    .done(response => {
+                        console.log(response)
+                        $('#selectDoyenne').empty()
+                            .append("<option value=''>-</option>");
+
+                        // Ajouter les nouvelles options à partir de la réponse de la requête
+                        $.each(response, function(index, doyenne) {
+                            $('#selectDoyenne').append($('<option>', {
+                                value: doyenne.id,
+                                text: doyenne.nom
+                            }));
+                        });
+                    })
+                    .fail((xhr, status, error)=>{
+                        console.log(`Une erreur s'est produite lors de la récupération de la liste des doyennes: ${error}`)
+                    })
+            });
+        });
+
         $( '#vicariat' ).select2( {
             theme: "bootstrap-5",
             width: $( this ).data( 'width' ) ? $( this ).data( 'width' ) : $( this ).hasClass( 'w-100' ) ? '100%' : 'style',
             placeholder: $( this ).data( 'placeholder' ),
         } );
+
     </script>
 {% endblock %}

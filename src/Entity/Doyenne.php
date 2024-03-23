@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\DoyenneRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: DoyenneRepository::class)]
 class Doyenne
@@ -11,18 +12,23 @@ class Doyenne
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups('participation')]
     private ?int $id = null;
 
     #[ORM\Column(nullable: true)]
+    #[Groups('participation')]
     private ?int $code = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups('participation')]
     private ?string $nom = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups('participation')]
     private ?string $slug = null;
 
     #[ORM\ManyToOne(inversedBy: 'doyennes')]
+    #[Groups('participation')]
     private ?Vicariat $vicariat = null;
 
     public function getId(): ?int

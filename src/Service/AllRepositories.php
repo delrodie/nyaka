@@ -51,8 +51,10 @@ class AllRepositories
         return $this->doyenneRepository->findOneBy([],['id' => "DESC"]);
     }
 
-    public function getAllDoyenne(string $order=null)
+    public function getAllDoyenne($vicariat=null, string $order=null)
     {
+        if ($vicariat) return $this->doyenneRepository->findBy(['vicariat' => $vicariat], ['nom' => "ASC"]);
+
         if ($order) return $this->doyenneRepository->findBy([],['nom' => $order]);
 
         return $this->doyenneRepository->findAll();

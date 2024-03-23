@@ -6,6 +6,7 @@ use App\Repository\VicariatRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: VicariatRepository::class)]
 class Vicariat
@@ -13,18 +14,23 @@ class Vicariat
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups('participation')]
     private ?int $id = null;
 
     #[ORM\Column(nullable: true)]
+    #[Groups('participation')]
     private ?int $code = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups('participation')]
     private ?string $nom = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups('participation')]
     private ?string $slug = null;
 
     #[ORM\OneToMany(targetEntity: Doyenne::class, mappedBy: 'vicariat')]
+    #[Groups('participation')]
     private Collection $doyennes;
 
     public function __construct()
