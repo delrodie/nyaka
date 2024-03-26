@@ -1,6 +1,6 @@
 {% extends 'backend_layout.html.twig' %}
 
-{% block title %}{{ parent() }} Gestion liste des doyennes{% endblock %}
+{% block title %}{{ parent() }} Gestion liste des sections{% endblock %}
 
 {% block body %}
 
@@ -9,12 +9,12 @@
             <div class="card-body px-4 py-3">
                 <div class="row align-items-center">
                     <div class="col-9">
-                        <h4 class="fw-semibold mb-8">Gestion des doyennes</h4>
+                        <h4 class="fw-semibold mb-8">Gestion des sections</h4>
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a class="text-muted" href="#">Modules</a></li>
                                 <li class="breadcrumb-item"><a class="text-muted" href="#">Gestion</a></li>
-                                <li class="breadcrumb-item" aria-current="page">doyennes</li>
+                                <li class="breadcrumb-item" aria-current="page">sections</li>
                             </ol>
                         </nav>
                     </div>
@@ -49,29 +49,29 @@
                                     <tr>
                                         <th class="text-center text-uppercase">#</th>
                                         <th class="text-center text-uppercase">Codes</th>
-                                        <th class="text-center text-uppercase">Vicariats</th>
+                                        <th class="text-center text-uppercase">Doyenne</th>
                                         <th class="text-center text-uppercase">Noms</th>
-                                        <th class="text-center text-uppercase">Sections</th>
+                                        <th class="text-center text-uppercase">Participants</th>
                                         <th class="text-center text-uppercase">actions</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    {% for doyenne in doyennes %}
+                                    {% for section in sections %}
                                         <tr>
                                             <td>{{ loop.index }}</td>
-                                            <td class="text-center">{{ doyenne.code }}</td>
-                                            <td>{{ doyenne.vicariat.nom }}</td>
-                                            <td>{{ doyenne.nom }}</td>
-                                            <td class="text-center">{{ doyenne.sections|length }}</td>
+                                            <td class="text-center">{{ section.code }}</td>
+                                            <td>{{ section.doyenne.nom }}</td>
+                                            <td>{{ section.paroisse }}</td>
+                                            <td class="text-center">{{ section.id|length }}</td>
                                             <td class="text-center">
-                                                <a href="{{ path('app_backend_doyenne_show', {'id': doyenne.id}) }}"><i class="ti-receipt"></i></a>
+                                                <a href="{{ path('app_backend_section_show', {'id': section.id}) }}"><i class="ti-receipt"></i></a>
                                                 &nbsp; | &nbsp;
-                                                <a href="{{ path('app_backend_doyenne_edit', {'id': doyenne.id}) }}"><i class="ti-pencil-alt"></i></a>
+                                                <a href="{{ path('app_backend_section_edit', {'id': section.id}) }}"><i class="ti-pencil-alt"></i></a>
                                             </td>
                                         </tr>
                                     {% else %}
                                         <tr>
-                                            <td colspan="5">Aucun doyenne trouvé</td>
+                                            <td colspan="6" class="text-center">Aucun section trouvé</td>
                                         </tr>
                                     {% endfor %}
                                     </tbody>
@@ -85,7 +85,7 @@
         </section>
 
         <div id="primary-header-modal" class="modal fade" tabindex="-1" aria-labelledby="primary-header-modalLabel" aria-hidden="true">
-            {{ include('backend_doyenne/_form.html.twig', {'button_label': 'Modifier'}) }}
+            {{ include('backend_section/_form.html.twig') }}
         </div>
 
     </div>
@@ -108,11 +108,4 @@
             ]
         } );
     </script>
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            var modal = new bootstrap.Modal(document.getElementById("primary-header-modal"));
-            modal.show();
-        });
-    </script>
 {% endblock %}
-

@@ -60,7 +60,7 @@
                                             <td>{{ loop.index }}</td>
                                             <td class="text-center">{{ vicariat.code }}</td>
                                             <td>{{ vicariat.nom }}</td>
-                                            <td class="text-center">{{ vicariat.id|length }}</td>
+                                            <td class="text-center">{{ vicariat.doyennes|length }}</td>
                                             <td class="text-center">
                                                 <a href="{{ path('app_backend_vicariat_show', {'id': vicariat.id}) }}"><i class="ti-receipt"></i></a>
                                                 &nbsp; | &nbsp;

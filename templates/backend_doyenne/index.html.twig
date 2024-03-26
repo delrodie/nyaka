@@ -62,7 +62,7 @@
                                             <td class="text-center">{{ doyenne.code }}</td>
                                             <td>{{ doyenne.vicariat.nom }}</td>
                                             <td>{{ doyenne.nom }}</td>
-                                            <td class="text-center">{{ doyenne.id|length }}</td>
+                                            <td class="text-center">{{ doyenne.sections|length }}</td>
                                             <td class="text-center">
                                                 <a href="{{ path('app_backend_doyenne_show', {'id': doyenne.id}) }}"><i class="ti-receipt"></i></a>
                                                 &nbsp; | &nbsp;

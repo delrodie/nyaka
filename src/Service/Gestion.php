@@ -86,6 +86,36 @@ class Gestion
         return true;
     }
 
+    public function codeSection($doyenne)
+    {
+        $lastSection = $this->allRepositories->getOneDoyenne();
+        if (!$doyenne) return false;
+        if (!$lastSection) return (int) $doyenne->getCode().''. 100;
+
+        $suffixe = substr($lastSection->getCode(), -3);
+
+        return (int) $doyenne->getCode().''.(int) $suffixe + 1;
+    }
+
+    /**
+     * La mise a jour du code de la section
+     *
+     * @param $section
+     * @return string
+     */
+    public function updateCodeSection($section): string
+    {
+        return (int) $section->getDoyenne()->getCode().''.substr($section->getCode(), -3);
+    }
+
+    public function uniciteSection($slug)
+    {
+        $exist = $this->allRepositories->getOneSection($slug);
+        if ($exist) return true;
+
+        return false;
+    }
+
     /**
      * Formattage slug
      * @param string $string
