@@ -1,0 +1,91 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}NYAKA NANSI 2024 - Inscription {% endblock %}
+
+{% block body %}
+    <div class="overflow-hidden">
+        <div class="logo">
+            <div class="logo-icon" data-aos="fade-right" data-aos-easing="ease-in-sine" data-aos-duration="2000">
+                <img src="{{ absolute_url(asset('frontend/img/logo-activite.png')) }}" alt="" class="img-fluid activite">
+            </div>
+            <div class="logo-text" data-aos="fade-left" data-aos-easing="ease-in-sine" data-aos-duration="2000">
+                <h2 class="titre-activite">
+                    N'yâkâ Nansi 2024
+                </h2>
+                <h3>Je participe à cette édition</h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="formulaire" data-aos="fade-up" data-aos-easing="linear" data-aos-duration="2000">
+            <div class="text-center mt-5 mb-5" data-aos="zoom-out" data-aos-duration="3000" data-aos-easing="ease-in-back">
+                <h2 class="titre">Qui suis-je?</h2>
+            </div>
+            <form action="paiement.html" method="post">
+                <div class="form-group row">
+                    <div class="col-12 mt-3">
+                        <label for="inputNom">Nom</label>
+                        <input type="text" name="nom"  id="inputNom" class="form-control form-control-lg" placeholder="Nom de famille">
+                    </div>
+                    <div class="col-12 mt-3">
+                        <label for="inputPrenom">Prenoms</label>
+                        <input type="text" id="inputPrenom" class="form-control form-control-lg">
+                    </div>
+                    <div class="col-4 mt-3">
+                        <label for="selectSexe">Sexe</label>
+                        <select name="selectSexe" id="selectSexe" class="form-select form-select-lg">
+                            <option value=""></option>
+                            <option value="M">M</option>
+                            <option value="F">F</option>
+                        </select>
+                    </div>
+                    <div class="col-8 mt-3">
+                        <label for="inputContact">Contact</label>
+                        <input type="tel" id="inputContact" class="form-control form-control-lg">
+                    </div>
+                    <div class="col-5 mt-3">
+                        <label for="selectUrgence">Urgence</label>
+                        <select name="selectUrgence" id="selectUrgence" class="form-select form-select-lg">
+                            <option value=""></option>
+                            <option value="MERE">MERE</option>
+                            <option value="PERE">PERE</option>
+                            <option value="TUTEUR">TUTEUR</option>
+                        </select>
+                    </div>
+                    <div class="col-7 mt-3">
+                        <label for="inputUrgenceContact">Urgence Contact</label>
+                        <input type="tel" id="urgenceContact" class="form-control form-control-lg">
+                    </div>
+                    <div class="col-6 mt-5 d-grid gap-2">
+                        <a href="index.html" class="btn btn-outline-secondary btn-lg">Annuler</a>
+                    </div>
+                    <div class="col-6 mt-5 d-grid gap-2">
+                        <button type="submit" class="btn btn-primary btn-lg">Suivant</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css" />
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+        });
+
+        $( '#vicariat' ).select2( {
+            theme: "bootstrap-5",
+            width: $( this ).data( 'width' ) ? $( this ).data( 'width' ) : $( this ).hasClass( 'w-100' ) ? '100%' : 'style',
+            placeholder: $( this ).data( 'placeholder' ),
+        } );
+
+    </script>
+{% endblock %}

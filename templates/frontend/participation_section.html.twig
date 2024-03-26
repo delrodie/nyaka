@@ -22,7 +22,7 @@
             <div class="text-center mt-5 mb-5" data-aos="zoom-out" data-aos-duration="3000" data-aos-easing="ease-in-back">
                 <h2 class="titre">D'où je viens?</h2>
             </div>
-            <form action="#">
+            <form action="{{ path('app_participation_section') }}" method="post">
                 <div class="form-group row">
                     <div class="col-12 mt-3">
                         <label for="vicariat">Vicariat</label>
@@ -41,12 +41,10 @@
                     <div class="col-12 mt-3">
                         <label for="selectSection">Section de base</label>
                         <select name="selectSection" id="selectSection" class="form-select form-select-lg">
-                            <option value=""></option>
-                            <option value="">Section de base</option>
                         </select>
                     </div>
                     <div class="col-6 mt-5 d-grid gap-2">
-                        <a href="index.html" class="btn btn-outline-secondary btn-lg">Annuler</a>
+                        <a href="{{ absolute_url(path('app_home')) }}" class="btn btn-outline-secondary btn-lg">Annuler</a>
                     </div>
                     <div class="col-6 mt-5 d-grid gap-2">
                         <button type="submit" class="btn btn-primary btn-lg">Suivant</button>
@@ -86,6 +84,28 @@
                     })
                     .fail((xhr, status, error)=>{
                         console.log(`Une erreur s'est produite lors de la récupération de la liste des doyennes: ${error}`)
+                    })
+            });
+
+            $('#selectDoyenne').on('change', function(){
+                let doyenneId = $(this).val();
+                console.log(doyenneId);
+                $.getJSON("{{ absolute_url(path('app_api_section_list')) }}", {'doyenne_id': doyenneId})
+                    .done(response => {
+                        console.log(response)
+                        $('#selectSection').empty()
+                            .append("<option value=''>-</option>");
+
+                        // Ajouter les nouvelles options à partir de la réponse de la requête
+                        $.each(response, function(index, section) {
+                            $('#selectSection').append($('<option>', {
+                                value: section.id,
+                                text: section.paroisse
+                            }));
+                        });
+                    })
+                    .fail((xhr, status, error)=>{
+                        console.log(`Une erreur s'est produite lors de la récupération de la liste des sections de base: ${error}`)
                     })
             });
         });
