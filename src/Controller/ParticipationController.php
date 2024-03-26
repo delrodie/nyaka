@@ -6,6 +6,7 @@ use App\Service\AllRepositories;
 use App\Service\Gestion;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route('/participation')]
@@ -19,25 +20,23 @@ class ParticipationController extends AbstractController
     }
 
     #[Route('/', name: 'app_participation_index')]
-    public function index()
+    public function index(): Response
     {
         return $this->render('frontend/participation_section.html.twig',[
             'vicariats' => $this->allRepositories->getAllVicariat("ASC"),
         ]);
     }
 
-    #[Route('/section', name: 'app_participation_section', methods: ['POST'])]
-    public function section(Request $request)
+    #[Route('/identite', name: 'app_participation_identite')]
+    public function identite(): Response
     {
-//        dd($request);
-        $base = [
-            'vicariat_id' => (int) $request->get('selectVicariat'),
-            'doyenne_id' => (int) $request->get('selectDoyenne'),
-            'section_id' => (int) $request->get('selectSection')
-        ];
-
-        $request->getSession()->set('base', $base);
-
         return $this->render('frontend/participation_identite.html.twig');
     }
+
+    #[Route('/paiement/base', name: 'app_participation_paiement')]
+    public function paiement(): Response
+    {
+        return $this->render('frontend/participation_paiement.html.twig');
+    }
+
 }

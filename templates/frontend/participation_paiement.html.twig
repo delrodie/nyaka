@@ -1,0 +1,80 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}NYAKA NANSI 2024 - Inscription {% endblock %}
+
+{% block body %}
+    <div class="overflow-hidden">
+        <div class="logo">
+            <div class="logo-icon" data-aos="fade-right" data-aos-easing="ease-in-sine" data-aos-duration="2000">
+                <img src="{{ absolute_url(asset('frontend/img/logo-activite.png')) }}" alt="" class="img-fluid activite">
+            </div>
+            <div class="logo-text" data-aos="fade-left" data-aos-easing="ease-in-sine" data-aos-duration="2000">
+                <h2 class="titre-activite">
+                    N'yâkâ Nansi 2024
+                </h2>
+                <h3>Je participe à cette édition</h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="formulaire" data-aos="fade-up" data-aos-easing="linear" data-aos-duration="2000">
+            <div class="text-center mt-5 mb-5" data-aos="zoom-out" data-aos-duration="3000" data-aos-easing="ease-in-back">
+                <h2 class="titre">Puis-je payer ma participation?</h2>
+            </div>
+            <form action="">
+                <div class="form-group row">
+                    <div class="col-12 mt-3">
+                        <label for="selectGrade">Grade</label>
+                        <select name="selectGrade" id="selectGrade" class="form-select form-select-lg">
+                            <option value=""></option>
+                            <option value="">Grade</option>
+                        </select>
+                    </div>
+                    <div class="col-6 mt-3">
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+                            <label class="form-check-label" for="flexSwitchCheckDefault">Tee-shirt</label>
+                        </div>
+                    </div>
+                    <div class="col-6 mt-3">
+                        <label for="selectSexe">Taille</label>
+                        <select name="selectSexe" id="selectSexe" class="form-select form-select-lg">
+                            <option value=""></option>
+                            <option value="M">M</option>
+                            <option value="F">L</option>
+                            <option value="F">XL</option>
+                            <option value="F">XXL</option>
+                        </select>
+                    </div>
+                    <div class="col-12 mt-3">
+                        <div class="input-group input-group-lg">
+                            <span class="input-group-text" id="inputGroup-sizing-lg">Montant total</span>
+                            <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg">
+                        </div>
+                    </div>
+
+
+                    <div class="col-12 mt-5 d-grid gap-2">
+                        <button type="submit" class="btn btn-primary btn-lg">Valider</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="loader-overlay" style="display: none">
+        <div class="loader"></div>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+
+    <script>
+        $(document).ready(function() {
+
+        });
+
+
+    </script>
+{% endblock %}

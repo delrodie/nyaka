@@ -22,11 +22,11 @@
             <div class="text-center mt-5 mb-5" data-aos="zoom-out" data-aos-duration="3000" data-aos-easing="ease-in-back">
                 <h2 class="titre">D'où je viens?</h2>
             </div>
-            <form action="{{ path('app_participation_section') }}" method="post">
+            <form>
                 <div class="form-group row">
                     <div class="col-12 mt-3">
                         <label for="vicariat">Vicariat</label>
-                        <select name="selectVicariat" id="selectVicariat" class="form-select form-select-lg" data-placeholder="Selectionnez votre vicariat">
+                        <select name="selectVicariat" id="selectVicariat" class="form-select form-select-lg" data-placeholder="Selectionnez votre vicariat" required>
                             <option value=""></option>
                             {% for vicariat in vicariats %}
                                 <option value="{{ vicariat.id }}">{{ vicariat.nom }}</option>
@@ -35,12 +35,12 @@
                     </div>
                     <div class="col-12 mt-3">
                         <label for="selectDoyenne">Doyenne</label>
-                        <select name="selectDoyenne" id="selectDoyenne" class="form-select form-select-lg">
+                        <select name="selectDoyenne" id="selectDoyenne" class="form-select form-select-lg" required>
                         </select>
                     </div>
                     <div class="col-12 mt-3">
                         <label for="selectSection">Section de base</label>
-                        <select name="selectSection" id="selectSection" class="form-select form-select-lg">
+                        <select name="selectSection" id="selectSection" class="form-select form-select-lg" required>
                         </select>
                     </div>
                     <div class="col-6 mt-5 d-grid gap-2">
@@ -53,6 +53,9 @@
             </form>
         </div>
     </div>
+    <div id="loader-overlay" style="display: none">
+        <div class="loader"></div>
+    </div>
 {% endblock %}
 {% block stylesheets %}
     {{ parent() }}
@@ -62,6 +65,7 @@
 {% block javascripts %}
     {{ parent() }}
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
         $(document).ready(function() {
@@ -107,6 +111,51 @@
                     .fail((xhr, status, error)=>{
                         console.log(`Une erreur s'est produite lors de la récupération de la liste des sections de base: ${error}`)
                     })
+            });
+
+            // Soumission du formulaire
+            $('form').submit(function(event) {
+                // Empêchez le comportement par défaut du formulaire
+                event.preventDefault();
+
+                // Récupérez les données du formulaire
+                var formData = {
+                    selectVicariat: $('#selectVicariat').val(),
+                    selectDoyenne: $('#selectDoyenne').val(),
+                    selectSection: $('#selectSection').val()
+                };
+
+                console.log(JSON.stringify(formData))
+
+                // Envoyez les données au serveur via une requête AJAX
+                $.ajax({
+                    method: 'POST',
+                    url: '{{ absolute_url(path('app_api_participation_section'))}}',
+                    data: JSON.stringify(formData),
+                    success: function(response) {
+                        console.log(response)
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Bravo! étape validée!',
+                            text: "Nous savons désormais d'où tu viens. Dis-nous maintenant qui tu es!",
+                            confirmButtonText: 'OK'
+                        }).then((result) => {
+                            /* Read more about isConfirmed, isDenied below */
+                            if (result.isConfirmed) {
+                                window.location = "{{ absolute_url(path('app_participation_identite')) }}"
+                            }
+                        });
+
+                    },
+                    error: function(xhr, status, error) {
+                        // Gérez les erreurs ici (par exemple, affichez un message d'erreur)
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Erreur!',
+                            text: 'Une erreur s\'est produite lors de l\'inscription. Veuillez réessayer plus tard.'
+                        });
+                    }
+                });
             });
         });
 

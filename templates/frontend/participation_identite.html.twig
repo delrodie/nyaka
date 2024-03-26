@@ -22,19 +22,19 @@
             <div class="text-center mt-5 mb-5" data-aos="zoom-out" data-aos-duration="3000" data-aos-easing="ease-in-back">
                 <h2 class="titre">Qui suis-je?</h2>
             </div>
-            <form action="paiement.html" method="post">
+            <form>
                 <div class="form-group row">
                     <div class="col-12 mt-3">
                         <label for="inputNom">Nom</label>
-                        <input type="text" name="nom"  id="inputNom" class="form-control form-control-lg" placeholder="Nom de famille">
+                        <input type="text" name="_nom"  id="inputNom" class="form-control form-control-lg" placeholder="Nom de famille" autocomplete="off" required>
                     </div>
                     <div class="col-12 mt-3">
                         <label for="inputPrenom">Prenoms</label>
-                        <input type="text" id="inputPrenom" class="form-control form-control-lg">
+                        <input type="text" name="_prenom" id="inputPrenom" class="form-control form-control-lg" autocomplete="off" required>
                     </div>
                     <div class="col-4 mt-3">
                         <label for="selectSexe">Sexe</label>
-                        <select name="selectSexe" id="selectSexe" class="form-select form-select-lg">
+                        <select name="selectSexe" id="selectSexe" class="form-select form-select-lg" required>
                             <option value=""></option>
                             <option value="M">M</option>
                             <option value="F">F</option>
@@ -42,11 +42,14 @@
                     </div>
                     <div class="col-8 mt-3">
                         <label for="inputContact">Contact</label>
-                        <input type="tel" id="inputContact" class="form-control form-control-lg">
+                        <input type="tel" name="_contact" id="inputContact" class="form-control form-control-lg" autocomplete="off"
+                               maxlength="10" pattern="[0-9]{10}"
+                               required
+                        >
                     </div>
                     <div class="col-5 mt-3">
                         <label for="selectUrgence">Urgence</label>
-                        <select name="selectUrgence" id="selectUrgence" class="form-select form-select-lg">
+                        <select name="selectUrgence" id="selectUrgence" class="form-select form-select-lg" required>
                             <option value=""></option>
                             <option value="MERE">MERE</option>
                             <option value="PERE">PERE</option>
@@ -55,10 +58,13 @@
                     </div>
                     <div class="col-7 mt-3">
                         <label for="inputUrgenceContact">Urgence Contact</label>
-                        <input type="tel" id="urgenceContact" class="form-control form-control-lg">
+                        <input type="tel" name="urgenceContact" id="inputUrgenceContact" class="form-control form-control-lg" autocomplete="off"
+                               maxlength="10" pattern="[0-9]{10}"
+                               required
+                        >
                     </div>
                     <div class="col-6 mt-5 d-grid gap-2">
-                        <a href="index.html" class="btn btn-outline-secondary btn-lg">Annuler</a>
+                        <a href="{{ absolute_url(path('app_participation_index')) }}" class="btn btn-outline-secondary btn-lg">Annuler</a>
                     </div>
                     <div class="col-6 mt-5 d-grid gap-2">
                         <button type="submit" class="btn btn-primary btn-lg">Suivant</button>
@@ -67,25 +73,72 @@
             </form>
         </div>
     </div>
-{% endblock %}
-{% block stylesheets %}
-    {{ parent() }}
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css" />
+    <div id="loader-overlay" style="display: none">
+        <div class="loader"></div>
+    </div>
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
     <script>
         $(document).ready(function() {
-        });
+            $('#inputNom, #inputPrenom').on('input', function() {
+                $(this).val($(this).val().toUpperCase());
+            });
 
-        $( '#vicariat' ).select2( {
-            theme: "bootstrap-5",
-            width: $( this ).data( 'width' ) ? $( this ).data( 'width' ) : $( this ).hasClass( 'w-100' ) ? '100%' : 'style',
-            placeholder: $( this ).data( 'placeholder' ),
-        } );
+            $('#inputContact, #urgenceContact').on('input', function() {
+                // Filtrer les caractères non numériques
+                $(this).val($(this).val().replace(/\D/g, ''));
+            });
+
+            $('form').submit(function(e) {
+                e.preventDefault();
+                $('#loader-overlay').show();
+                $('button[type="submit"]').prop('disabled', true);
+
+                var formData = {
+                    nom: $('#inputNom').val(),
+                    prenom: $('#inputPrenom').val(),
+                    contact: $('#inputContact').val(),
+                    sexe: $('#selectSexe').val(),
+                    urgence: $('#selectUrgence').val(),
+                    urgenceContact: $('#inputUrgenceContact').val()
+                };
+
+                console.log(JSON.stringify(formData));
+
+                $.ajax({
+                    method: 'POST',
+                    url: '{{ absolute_url(path('app_api_participation_identite'))}}',
+                    data: JSON.stringify(formData),
+                    success: function(response) {
+                        console.log(response)
+                        $('#loader-overlay').hide();
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Félicitations! étape validée! 🥳',
+                            text: "Mais au fait nous avons oublié de te demander ta grade. Merci de nous le signifier et aussi de payer ta participation 🤭!",
+                            confirmButtonText: 'OK'
+                        }).then((result) => {
+                            /* Read more about isConfirmed, isDenied below */
+                            if (result.isConfirmed) {
+                                window.location = "{{ absolute_url(path('app_participation_paiement')) }}"
+                            }
+                        });
+
+                    },
+                    error: function(xhr, status, error) {
+                        // Gérez les erreurs ici (par exemple, affichez un message d'erreur)
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Erreur!',
+                            text: 'Une erreur s\'est produite lors de l\'inscription. Veuillez réessayer plus tard.'
+                        });
+                    }
+                });
+
+            });
+        });
 
     </script>
 {% endblock %}
