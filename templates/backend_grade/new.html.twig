@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Grade{% endblock %}
+
+{% block body %}
+    <h1>Create new Grade</h1>
+
+    {{ include('backend_grade/_form.html.twig') }}
+
+    <a href="{{ path('app_backend_grade_index') }}">back to list</a>
+{% endblock %}
