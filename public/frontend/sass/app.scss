@@ -131,3 +131,28 @@ body{
     z-index: 9998; /* Mettre au-dessus de tout le reste */
 }
 
+.recu{
+    .libelle{
+        font-weight: bold;
+        font-size: .9rem;
+        color: #616060;
+    }
+
+    .valeur{
+        font-weight: bold;
+        font-size: 1.1rem;
+    }
+
+    .matricule{
+        font-weight: bold;
+        font-size: 1.2rem;
+        color: #0d6efd;
+    }
+
+    .montant{
+        font-weight: bold;
+        font-size: 1.3rem;
+        color: darkred;
+    }
+}
+

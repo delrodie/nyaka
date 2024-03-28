@@ -36,7 +36,9 @@ class ParticipationController extends AbstractController
     #[Route('/paiement/base', name: 'app_participation_paiement')]
     public function paiement(): Response
     {
-        return $this->render('frontend/participation_paiement.html.twig');
+        return $this->render('frontend/participation_paiement.html.twig',[
+            'grades' => $this->allRepositories->getAllGrade()
+        ]);
     }
 
 }

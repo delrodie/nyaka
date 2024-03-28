@@ -117,6 +117,24 @@ class Gestion
     }
 
     /**
+     * Génération du matricule du participant
+     *
+     * @param $vicariat
+     * @return string
+     * @throws \Random\RandomException
+     */
+    public function matricule($vicariat): string
+    {
+        $vicariatEntity = $this->allRepositories->getOneVicariat(null, $vicariat);
+
+        $nombreAleatoire = random_int(10000,99999);
+
+        $lettreAleatoire = chr(rand(65, 90));
+
+        return $vicariatEntity->getCode().''.$nombreAleatoire.''.$lettreAleatoire;
+    }
+
+    /**
      * Formattage slug
      * @param string $string
      * @return \Symfony\Component\String\AbstractUnicodeString

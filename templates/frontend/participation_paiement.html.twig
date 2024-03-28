@@ -20,42 +20,56 @@
     <div class="container">
         <div class="formulaire" data-aos="fade-up" data-aos-easing="linear" data-aos-duration="2000">
             <div class="text-center mt-5 mb-5" data-aos="zoom-out" data-aos-duration="3000" data-aos-easing="ease-in-back">
-                <h2 class="titre">Puis-je payer ma participation?</h2>
+                <h2 class="titre">De quel grade suis-je?</h2>
             </div>
-            <form action="">
+            <form id="formValidation">
                 <div class="form-group row">
                     <div class="col-12 mt-3">
                         <label for="selectGrade">Grade</label>
-                        <select name="selectGrade" id="selectGrade" class="form-select form-select-lg">
+                        <select name="selectGrade" id="selectGrade" class="form-select form-select-lg" required>
                             <option value=""></option>
-                            <option value="">Grade</option>
+                            {% for grade in grades %}
+                                <option value="{{ grade.id }}">{{ grade.nom }}</option>
+                            {% endfor %}
                         </select>
                     </div>
+{#                    <div class="col-6 mt-3">#}
+{#                        <div class="form-check form-switch">#}
+{#                            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">#}
+{#                            <label class="form-check-label" for="flexSwitchCheckDefault">Tee-shirt</label>#}
+{#                        </div>#}
+{#                    </div>#}
                     <div class="col-6 mt-3">
-                        <div class="form-check form-switch">
-                            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
-                            <label class="form-check-label" for="flexSwitchCheckDefault">Tee-shirt</label>
-                        </div>
+                        <label for="selectTeeshirt">Veux-tu un teeshirt?</label>
+                        <select name="selectTeeshirt" id="selectTeeshirt" class="form-select form-select-lg" required>
+                            <option value="">-</option>
+                            <option value="OUI">OUI</option>
+                            <option value="NON">NON</option>
+                        </select>
                     </div>
                     <div class="col-6 mt-3">
                         <label for="selectSexe">Taille</label>
-                        <select name="selectSexe" id="selectSexe" class="form-select form-select-lg">
+                        <select name="selectTaille" id="selectTaille" class="form-select form-select-lg">
                             <option value=""></option>
                             <option value="M">M</option>
-                            <option value="F">L</option>
-                            <option value="F">XL</option>
-                            <option value="F">XXL</option>
+                            <option value="L">L</option>
+                            <option value="XL">XL</option>
+                            <option value="XXL">XXL</option>
                         </select>
                     </div>
+
                     <div class="col-12 mt-3">
-                        <div class="input-group input-group-lg">
-                            <span class="input-group-text" id="inputGroup-sizing-lg">Montant total</span>
-                            <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg">
+                        <div class="row justify-content-center align-content-center align-items-center">
+                            <div class="col-6 text-end mt-3" style="font-size: 1.1rem;">Montant total</div>
+                            <div class="col-6 mt-3">
+                                <div id="montantTotal" style="font-weight: bold; font-size: 1.7rem; color: #0d6efd"></div>
+                            </div>
                         </div>
                     </div>
 
 
                     <div class="col-12 mt-5 d-grid gap-2">
+                        <input type="hidden" name="inputMontant" id="hiddenMontant" >
                         <button type="submit" class="btn btn-primary btn-lg">Valider</button>
                     </div>
                 </div>
@@ -72,7 +86,89 @@
 
     <script>
         $(document).ready(function() {
+            $('#selectTaille').prop('required', false).prop('disabled', true);
+            $('#selectGrade').on('change', function () {
+                let gradeId = $(this).val();
+                console.log(gradeId);
+                $.getJSON("{{ absolute_url(path('app_api_grade_show')) }}",{'grade_id': gradeId})
+                    .done(response =>{
+                        console.log(response.montant)
+                        $('#montantTotal').empty()
+                            .text(response.montant);
 
+                        // Réinitialiser la liste de sélection #selectTeeshirt
+                        // $('#selectTeeshirt');
+
+                        $('#selectTeeshirt')
+                            .prop('selectedIndex', 0)
+                            .on('change', function(){
+                            let teeshirt = $(this).val();
+                            console.log(teeshirt)
+                            if (teeshirt === 'OUI'){
+                                let total = response.montant + response.teeshirt;
+                                $('#montantTotal').text(total);
+                                $('#hiddenMontant').append(total)
+                                $('#selectTaille')
+                                    .prop('selectedIndex', 0)
+                                    .prop('required', true)
+                                    .prop('disabled', false);
+                            }
+                            if (teeshirt === 'NON'){
+                                $('#montantTotal').text(response.montant)
+                                $('#hiddenMontant').append(response.montant)
+                                $('#selectTaille')
+                                    .prop('value','')
+                                    .prop('required', false)
+                                    .prop('disabled', true);
+                            }
+                        })
+                    })
+                    .fail((xhr,status, error) =>{
+                        swal.fire('error', "Une erreur s'est produit lors de la récupération des données: " + error)
+                    })
+            })
+
+            $('#formValidation').submit(function (e) {
+                e.preventDefault();
+
+                var formData = {
+                    grade: $('#selectGrade').val(),
+                    teeshirt: $('#selectTeeshirt').val(),
+                    taille: $('#selectTaille').val(),
+                    montant: $('#montantTotal').text(),
+                }
+
+                console.log(JSON.stringify(formData))
+
+                $.ajax({
+                    method: 'POST',
+                    url: "{{ absolute_url(path('app_api_participation_paiement')) }}",
+                    data: JSON.stringify(formData),
+                    success: function (response) {
+                        console.log(response)
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Yes! étape validée! 👍',
+                            text: "Et voilà, il ne te reste plus que de payer avec le pingouin bleu 🐧 comme ta tenue 🤣😂",
+                            confirmButtonText: 'OK'
+                        }).then((result) => {
+                            /* Read more about isConfirmed, isDenied below */
+                            if (result.isConfirmed) {
+                                console.log(response)
+                                window.location = "{{ absolute_url(path('app_home')) }}recu/" + response.matricule
+                            }
+                        });
+                    },
+                    error: function(xhr, status, error) {
+                        // Gérez les erreurs ici (par exemple, affichez un message d'erreur)
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Erreur!',
+                            text: 'Une erreur s\'est produite lors de l\'inscription. Veuillez réessayer plus tard.'
+                        });
+                    }
+                })
+            })
         });
 
 

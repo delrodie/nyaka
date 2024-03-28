@@ -2,7 +2,10 @@
 
 namespace App\Service;
 
+use App\Entity\Aspirant;
+use App\Repository\AspirantRepository;
 use App\Repository\DoyenneRepository;
+use App\Repository\GradeRepository;
 use App\Repository\SectionRepository;
 use App\Repository\VicariatRepository;
 use phpDocumentor\Reflection\Types\String_;
@@ -12,7 +15,9 @@ class AllRepositories
     public function __construct(
         private VicariatRepository $vicariatRepository,
         private DoyenneRepository $doyenneRepository,
-        private SectionRepository $sectionRepository
+        private SectionRepository $sectionRepository,
+        private GradeRepository $gradeRepository,
+        private AspirantRepository $aspirantRepository
     )
     {
     }
@@ -76,5 +81,67 @@ class AllRepositories
         if ($order) return $this->sectionRepository->findBy([], ['paroisse' => $order]);
 
         return $this->sectionRepository->findAll();
+    }
+
+    /**
+     *
+     * @param $slug
+     * @param $id
+     * @return \App\Entity\Grade|null
+     */
+    public function getOneGrade($slug=null, $id=null)
+    {
+        if ($slug) return $this->gradeRepository->findOneBy(['slug' => $slug]);
+        if ($id) return $this->gradeRepository->findOneBy(['id' => $id]);
+
+        return $this->gradeRepository->findOneBy([],['id' => "DESC"]);
+    }
+
+    /**
+     * Liste des grades
+     *
+     * @param string|null $order
+     * @return \App\Entity\Grade[]
+     */
+    public function getAllGrade(string $order=null): array
+    {
+        if ($order) return $this->gradeRepository->findBy([],['nom' => $order]);
+
+        return $this->gradeRepository->findAll();
+    }
+
+    /**
+     *
+     * @param $id
+     * @param string|null $matricule
+     * @return \App\Entity\Aspirant|null
+     */
+    public function getOneAspirant($id = null, string $matricule = null): ?Aspirant
+    {
+        if ($id) return $this->aspirantRepository->findOneBy(['id' => $id]);
+        if ($matricule) return $this->aspirantRepository->findOneBy(['matricule' => $matricule]);
+
+        return $this->aspirantRepository->findOneBy([],['id' => $id]);
+    }
+
+    /**
+     * Verification de l'existence de l'aspirant dans le système
+     *
+     * @param $nom
+     * @param $prenom
+     * @param $contact
+     * @return bool
+     */
+    public function verifAspirant($nom, $prenom, $contact): bool
+    {
+        $aspirant = $this->aspirantRepository->findOneBy([
+            'nom' => $nom,
+            'prenoms' => $prenom,
+            'contact' => $contact
+        ]);
+
+        if ($aspirant) return true;
+
+        return false;
     }
 }

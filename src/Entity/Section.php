@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\SectionRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
@@ -30,6 +32,14 @@ class Section
     #[ORM\Column(length: 255, nullable: true)]
     #[Groups('participation')]
     private ?string $slug = null;
+
+    #[ORM\OneToMany(targetEntity: Aspirant::class, mappedBy: 'section')]
+    private Collection $aspirants;
+
+    public function __construct()
+    {
+        $this->aspirants = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -80,6 +90,36 @@ class Section
     public function setSlug(?string $slug): static
     {
         $this->slug = $slug;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Aspirant>
+     */
+    public function getAspirants(): Collection
+    {
+        return $this->aspirants;
+    }
+
+    public function addAspirant(Aspirant $aspirant): static
+    {
+        if (!$this->aspirants->contains($aspirant)) {
+            $this->aspirants->add($aspirant);
+            $aspirant->setSection($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAspirant(Aspirant $aspirant): static
+    {
+        if ($this->aspirants->removeElement($aspirant)) {
+            // set the owning side to null (unless already changed)
+            if ($aspirant->getSection() === $this) {
+                $aspirant->setSection(null);
+            }
+        }
 
         return $this;
     }
