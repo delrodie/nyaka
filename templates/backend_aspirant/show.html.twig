@@ -1,0 +1,74 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Aspirant{% endblock %}
+
+{% block body %}
+    <h1>Aspirant</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ aspirant.id }}</td>
+            </tr>
+            <tr>
+                <th>Matricule</th>
+                <td>{{ aspirant.matricule }}</td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>{{ aspirant.nom }}</td>
+            </tr>
+            <tr>
+                <th>Prenoms</th>
+                <td>{{ aspirant.prenoms }}</td>
+            </tr>
+            <tr>
+                <th>Sexe</th>
+                <td>{{ aspirant.sexe }}</td>
+            </tr>
+            <tr>
+                <th>Contact</th>
+                <td>{{ aspirant.contact }}</td>
+            </tr>
+            <tr>
+                <th>Urgence</th>
+                <td>{{ aspirant.urgence }}</td>
+            </tr>
+            <tr>
+                <th>ContactUrgence</th>
+                <td>{{ aspirant.contactUrgence }}</td>
+            </tr>
+            <tr>
+                <th>Montant</th>
+                <td>{{ aspirant.montant }}</td>
+            </tr>
+            <tr>
+                <th>Teeshirt</th>
+                <td>{{ aspirant.teeshirt }}</td>
+            </tr>
+            <tr>
+                <th>Taille</th>
+                <td>{{ aspirant.taille }}</td>
+            </tr>
+            <tr>
+                <th>MontantTeeshirt</th>
+                <td>{{ aspirant.montantTeeshirt }}</td>
+            </tr>
+            <tr>
+                <th>CreatedAt</th>
+                <td>{{ aspirant.createdAt ? aspirant.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>UpdatedAt</th>
+                <td>{{ aspirant.updatedAt ? aspirant.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_backend_aspirant_index') }}">back to list</a>
+
+    <a href="{{ path('app_backend_aspirant_edit', {'id': aspirant.id}) }}">edit</a>
+
+    {{ include('backend_aspirant/_delete_form.html.twig') }}
+{% endblock %}

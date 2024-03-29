@@ -21,6 +21,20 @@ class AspirantRepository extends ServiceEntityRepository
         parent::__construct($registry, Aspirant::class);
     }
 
+    public function getAll()
+    {
+        return $this->createQueryBuilder('a')
+            ->addSelect('s')
+            ->addSelect('d')
+            ->addSelect('v')
+            ->addSelect('g')
+            ->leftJoin('a.section', 's')
+            ->leftJoin('s.doyenne', 'd')
+            ->leftJoin('d.vicariat', 'v')
+            ->leftJoin('a.grade', 'g')
+            ->getQuery()->getResult();
+    }
+
     //    /**
     //     * @return Aspirant[] Returns an array of Aspirant objects
     //     */

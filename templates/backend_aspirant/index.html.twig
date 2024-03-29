@@ -1,0 +1,154 @@
+{% extends 'backend_layout.html.twig' %}
+
+{% block title %}{{ parent() }} Gestion liste des aspirants{% endblock %}
+
+{% block body %}
+
+    <div class="container-fluid">
+        <div class="card bg-light-info shadow-none position-relative overflow-hidden">
+            <div class="card-body px-4 py-3">
+                <div class="row align-items-center">
+                    <div class="col-9">
+                        <h4 class="fw-semibold mb-8">Gestion des aspirants</h4>
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a class="text-muted" href="#">Modules</a></li>
+                                <li class="breadcrumb-item"><a class="text-muted" href="#">aspirants</a></li>
+                                <li class="breadcrumb-item" aria-current="page">aspirants</li>
+                            </ol>
+                        </nav>
+                    </div>
+                    <div class="col-3">
+                        <div class="text-center mb-n5">
+                            <span class="head-icon"><i class="ti-package"></i></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <section>
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="row">
+                                <div class="col"><h5 class="mb-2 fw-semibold fs-4">Liste</h5></div>
+
+                            </div>
+
+                        </div>
+                        <div class="card-body">
+                            <div id="table-loader" class="table-loader">
+                                <div class="loader"></div>
+                            </div>
+                            <div class="table-responsive">
+                                <table id="listes" class="table  border table-striped table-bordered display text-nowrap">
+                                    <thead>
+                                    <tr>
+                                        <th class="text-center text-uppercase">#</th>
+                                        <th class="text-center text-uppercase">Vicariat</th>
+                                        <th class="text-center text-uppercase">Doyenne</th>
+                                        <th class="text-center text-uppercase">Section</th>
+                                        <th class="text-center text-uppercase">Nom</th>
+                                        <th class="text-center text-uppercase">Matricule</th>
+                                        <th class="text-center text-uppercase">Sexe</th>
+                                        <th class="text-center text-uppercase">Contact</th>
+                                        <th class="text-center text-uppercase">Urgence</th>
+                                        <th class="text-center text-uppercase">Contact Urgence</th>
+                                        <th class="text-center text-uppercase">Grade</th>
+                                        <th class="text-center text-uppercase">TeeShirt</th>
+                                        <th class="text-center text-uppercase">Taille</th>
+                                        <th class="text-center text-uppercase">Montant</th>
+                                        <th class="text-center text-uppercase">actions</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for aspirant in aspirants %}
+                                        <tr>
+                                            <td>{{ loop.index }}</td>
+                                            <td class="">{{ aspirant.section.doyenne.vicariat.nom }}</td>
+                                            <td class="">{{ aspirant.section.doyenne.nom }}</td>
+                                            <td class="">{{ aspirant.section.paroisse }}</td>
+                                            <td class="">{{ aspirant.nom }} {{ aspirant.prenoms }}</td>
+                                            <td class="text-center">{{ aspirant.matricule }}</td>
+                                            <td class="text-center">{{ aspirant.sexe }}</td>
+                                            <td>{{ aspirant.contact }}</td>
+                                            <td class="text-center">{{ aspirant.urgence }}</td>
+                                            <td class="text-center">{{ aspirant.contactUrgence }}</td>
+                                            <td class="text-center">{{ aspirant.grade.nom }}</td>
+                                            <td class="text-center">{{ aspirant.teeshirt }}</td>
+                                            <td class="text-center">{{ aspirant.taille }}</td>
+                                            <td class="text-center">{{ aspirant.montant }}</td>
+                                            <td class="text-center">
+{#                                                <a href="{{ path('app_backend_aspirant_edit', {'id': aspirant.id}) }}"><i class="ti-pencil-alt"></i></a>#}
+                                            </td>
+                                        </tr>
+                                    {% else %}
+                                        <tr>
+                                            <td colspan="15">no records found</td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+    </div>
+
+{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('assets/vendor/css/prism.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/vendor/DataTables/datatables.min.css') }}">
+    <link rel="stylesheet" href="{{ absolute_url(asset('assets/vendor/css/select2.min.css')) }}">
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('assets/vendor/js/prism.js') }}"></script>
+    <script src="{{ asset('assets/vendor/DataTables/datatables.min.js') }}"></script>
+    <script src="https://cdn.datatables.net/scroller/2.4.1/js/dataTables.scroller.js"></script>
+    <script src="https://cdn.datatables.net/scroller/2.4.1/js/scroller.bootstrap5.js"></script>
+    <script>
+        $(document).ready(function() {
+            var tableLoader = $('#table-loader');
+            var table = $('#listes');
+
+            table.on('init.dt', function() {
+                tableLoader.find('.loader').hide();
+                table.show();
+            });
+
+            table.DataTable({
+                // Configurations du DataTable
+                dom: 'Bfrtip',
+                buttons: [
+                    'copy', 'excel', 'pdf'
+                ],
+                initComplete: function() {
+                    tableLoader.find('.loader').show();
+                    table.hide();
+                },
+                // scrollCollapse: true,
+                // scroller: true,
+                scrollX: 200
+            });
+        });
+    </script>
+    {#    <script>#}
+    {#        $('#listes').DataTable( {#}
+    {#            dom: 'Bfrtip',#}
+    {#            buttons: [#}
+    {#                'copy', 'excel', 'pdf'#}
+    {#            ]#}
+    {#        } );#}
+    {#    </script>#}
+    <script>
+        $(".select2").select2();
+    </script>
+{% endblock %}
