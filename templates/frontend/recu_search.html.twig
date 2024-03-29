@@ -88,8 +88,8 @@
         </div>
     </div>
     <div class="text-center mt-5">
+        <a href="{{ absolute_url(path('app_home')) }}" id="btnRetour" class="btn btn-outline-secondary btn-sm">Retour</a>
         <button id="print-button" class="btn btn-outline-primary btn-sm">Imprimer</button>
-
     </div>
 
     <div id="loader-overlay" style="display: none">
@@ -100,7 +100,7 @@
     {{ parent() }}
     <style>
         @media print {
-            #print-button {
+            #print-button, #btnRetour {
                 display: none;
             }
         }
