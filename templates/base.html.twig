@@ -3,8 +3,30 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>{% block title %}CV-AV Diocèse d'Abidjan{% endblock %}</title>
+        <title>{% block title %}N'yâkâ Nansi 2024 - fête diocèsaine 2024 des CV-AV{% endblock %}</title>
         <link rel="shortcut icon" href="{{ absolute_url(asset('frontend/img/logo-cvav.png')) }}">
+
+        <meta name="keywords" content="CVAV, diocese, Abidjan, Catholique, N'yaka">
+        <meta name="description" content="En marche vers un monde meilleur bâtissons une Côte d'Ivoire sans les violences et sans le travail des enfants." />
+        <link rel="canonical" href="{{ absolute_url(path('app_home')) }}" />
+        <link rel="next" href="{{ absolute_url(path('app_api_participation_section')) }}" />
+
+        <meta property="og:locale" content="fr_FR" />
+        <meta property="og:locale:alternate" content="en_US" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="N'yâkâ Nansi 2024 - fête diocèsaine 2024 des CVAV" />
+        <meta property="og:description" content="En marche vers un monde meilleur bâtissons une Côte d'Ivoire sans les violences et sans le travail des enfants." />
+        <meta property="og:url" content="{{ absolute_url(path('app_home')) }}" />
+        <meta property="og:site_name" content="CV-AV diocèse d'Abidjan " />
+        <meta property="article:modified_time" content="2024-03-29T11:08:30+00:00" />
+        <meta property="og:image" content="{{ absolute_url(asset('frontend/img/logo-cvav.png')) }}" />
+        <meta property="og:image:type" content="image/svg+xml" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:description" content="En marche vers un monde meilleur bâtissons une Côte d'Ivoire sans les violences et sans le travail des enfants."/>
+        <meta name="twitter:title" content="N'yâkâ Nansi 2024 - fête diocèsaine 2024 des CV-AV"/>
+        <meta name="twitter:domain" content="CV-AV diocèse d'Abidjan"/>
+        <meta name="twitter:image:src" content="{{ absolute_url(asset('frontend/img/logo-cvav.png')) }}"/>
+
         {% block stylesheets %}
             <link rel="stylesheet" href="{{ absolute_url(asset('frontend/css/app.css')) }}">
             <link rel="stylesheet" href="{{ absolute_url(asset('frontend/css/responsive.css')) }}">
