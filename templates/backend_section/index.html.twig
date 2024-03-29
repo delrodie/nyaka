@@ -62,7 +62,7 @@
                                             <td class="text-center">{{ section.code }}</td>
                                             <td>{{ section.doyenne.nom }}</td>
                                             <td>{{ section.paroisse }}</td>
-                                            <td class="text-center">{{ section.id|length }}</td>
+                                            <td class="text-center">{{ section.aspirants|length }}</td>
                                             <td class="text-center">
                                                 <a href="{{ path('app_backend_section_show', {'id': section.id}) }}"><i class="ti-receipt"></i></a>
                                                 &nbsp; | &nbsp;
