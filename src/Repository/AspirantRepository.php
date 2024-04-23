@@ -35,6 +35,33 @@ class AspirantRepository extends ServiceEntityRepository
             ->getQuery()->getResult();
     }
 
+    /**
+     * @param $grade
+     * @return mixed
+     */
+    public function getAllByGrade($grade): mixed
+    {
+        return $this->createQueryBuilder('a')
+            ->addSelect('s')
+            ->addSelect('d')
+            ->addSelect('v')
+            ->addSelect('g')
+            ->leftJoin('a.section', 's')
+            ->leftJoin('s.doyenne', 'd')
+            ->leftJoin('d.vicariat', 'v')
+            ->leftJoin('a.grade', 'g')
+            ->where('g.id = :grade')
+            ->setParameter('grade', $grade)
+            ->getQuery()->getResult();
+    }
+
+    public function getMontantTotal()
+    {
+        return $this->createQueryBuilder('a')
+            ->select('SUM(a.montant)')
+            ->getQuery()->getSingleScalarResult();
+    }
+
     //    /**
     //     * @return Aspirant[] Returns an array of Aspirant objects
     //     */

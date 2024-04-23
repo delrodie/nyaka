@@ -144,4 +144,24 @@ class AllRepositories
 
         return false;
     }
+
+    public function getAspirantByGrade()
+    {
+        $grades = $this->getAllGrade();
+
+        $liste=[]; $i=0;
+        foreach ($grades as $grade){
+            $liste[$i++] = [
+                'grade' => $grade,
+                'aspirants' => $this->aspirantRepository->getAllByGrade($grade->getId())
+            ];
+        }
+
+        return $liste;
+    }
+
+    public function getMontantTotalParticipation()
+    {
+        return $this->aspirantRepository->getMontantTotal();
+    }
 }
