@@ -159,35 +159,19 @@
                             success_url: "{{ absolute_url(path('app_home')) }}recu/" + response.matricule + "",
                         };
 
-                        fetch('https://api.wave.com/v1/checkout/sessions', {
+                        $.ajax({
                             method: 'POST',
-                            mode: 'no-cors', // Ajoutez cette ligne pour contourner les restrictions CORS
+                            url: 'https://api.wave.com/v1/checkout/sessions',
+                            data: checkout_params,
                             headers: {
                                 'Authorization': `Bearer ${api_key}`,
                                 'Content-Type': 'application/json',
                             },
-                            body: checkout_params
-                        })
-                            .then(response => response.json())
-                            .then(data => {
-                                const wave_launch_url = data.wave_launch_url;
+                            success: function (response) {
+                                const wave_launch_url = response.data.wave_launch_url;
                                 window.location.href = wave_launch_url;
-                            })
-                            .catch(error => console.error('Error:', error));
-
-                        // $.ajax({
-                        //     method: 'POST',
-                        //     url: 'https://api.wave.com/v1/checkout/sessions',
-                        //     data: checkout_params,
-                        //     headers: {
-                        //         'Authorization': `Bearer ${api_key}`,
-                        //         'Content-Type': 'application/json',
-                        //     },
-                        //     success: function (response) {
-                        //         const wave_launch_url = response.data.wave_launch_url;
-                        //         window.location.href = wave_launch_url;
-                        //     }
-                        // })
+                            }
+                        })
 
                         // axios.post('https://api.wave.com/v1/checkout/sessions', checkout_params, {
                         //     headers: {
