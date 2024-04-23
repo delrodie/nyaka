@@ -79,7 +79,7 @@ class ApiParticipationController extends AbstractController
 
         $grade = [
             'grade' => $getContent['grade'],
-            'teeshirt' => $getContent['teeshirt'],
+//            'teeshirt' => $getContent['teeshirt'],
             'taille' => $getContent['taille'],
             'montant' => $getContent['montant']
         ];
@@ -103,7 +103,7 @@ class ApiParticipationController extends AbstractController
         $aspirant->setUrgence($identite['urgence']);
         $aspirant->setContactUrgence($identite['urgenceContact']);
         $aspirant->setMontant($grade['montant']);
-        $aspirant->setTeeshirt($grade['teeshirt']);
+//        $aspirant->setTeeshirt($grade['teeshirt']);
         $aspirant->setTaille($grade['taille']);
         $aspirant->setMontantTeeshirt($gradeEntity->getTeeshirt());
         $aspirant->setGrade($gradeEntity);

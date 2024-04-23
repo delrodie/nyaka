@@ -24,7 +24,7 @@
             </div>
             <form id="formValidation">
                 <div class="form-group row">
-                    <div class="col-12 mt-3">
+                    <div class="col-md-6 mt-3">
                         <label for="selectGrade">Grade</label>
                         <select name="selectGrade" id="selectGrade" class="form-select form-select-lg" required>
                             <option value=""></option>
@@ -39,17 +39,17 @@
 {#                            <label class="form-check-label" for="flexSwitchCheckDefault">Tee-shirt</label>#}
 {#                        </div>#}
 {#                    </div>#}
-                    <div class="col-6 mt-3">
-                        <label for="selectTeeshirt">Veux-tu un teeshirt?</label>
-                        <select name="selectTeeshirt" id="selectTeeshirt" class="form-select form-select-lg" required>
-                            <option value="">-</option>
-                            <option value="OUI">OUI</option>
-                            <option value="NON">NON</option>
-                        </select>
-                    </div>
-                    <div class="col-6 mt-3">
-                        <label for="selectSexe">Taille</label>
-                        <select name="selectTaille" id="selectTaille" class="form-select form-select-lg">
+{#                    <div class="col-6 mt-3">#}
+{#                        <label for="selectTeeshirt">Veux-tu un teeshirt?</label>#}
+{#                        <select name="selectTeeshirt" id="selectTeeshirt" class="form-select form-select-lg" required>#}
+{#                            <option value="">-</option>#}
+{#                            <option value="OUI">OUI</option>#}
+{#                            <option value="NON">NON</option>#}
+{#                        </select>#}
+{#                    </div>#}
+                    <div class="col-md-6 mt-3">
+                        <label for="selectSexe">Taille du tee-shirt</label>
+                        <select name="selectTaille" id="selectTaille" class="form-select form-select-lg" required>
                             <option value=""></option>
                             <option value="M">M</option>
                             <option value="L">L</option>
@@ -83,10 +83,11 @@
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
     <script>
         $(document).ready(function() {
-            $('#selectTaille').prop('required', false).prop('disabled', true);
+            // $('#selectTaille').prop('required', false).prop('disabled', true);
             $('#selectGrade').on('change', function () {
                 let gradeId = $(this).val();
                 console.log(gradeId);
@@ -99,29 +100,29 @@
                         // Réinitialiser la liste de sélection #selectTeeshirt
                         // $('#selectTeeshirt');
 
-                        $('#selectTeeshirt')
-                            .prop('selectedIndex', 0)
-                            .on('change', function(){
-                            let teeshirt = $(this).val();
-                            console.log(teeshirt)
-                            if (teeshirt === 'OUI'){
-                                let total = response.montant + response.teeshirt;
-                                $('#montantTotal').text(total);
-                                $('#hiddenMontant').append(total)
-                                $('#selectTaille')
-                                    .prop('selectedIndex', 0)
-                                    .prop('required', true)
-                                    .prop('disabled', false);
-                            }
-                            if (teeshirt === 'NON'){
-                                $('#montantTotal').text(response.montant)
-                                $('#hiddenMontant').append(response.montant)
-                                $('#selectTaille')
-                                    .prop('value','')
-                                    .prop('required', false)
-                                    .prop('disabled', true);
-                            }
-                        })
+                        // $('#selectTeeshirt')
+                        //     .prop('selectedIndex', 0)
+                        //     .on('change', function(){
+                        //     let teeshirt = $(this).val();
+                        //     console.log(teeshirt)
+                        //     if (teeshirt === 'OUI'){
+                        //         let total = response.montant + response.teeshirt;
+                        //         $('#montantTotal').text(total);
+                        //         $('#hiddenMontant').append(total)
+                        //         $('#selectTaille')
+                        //             .prop('selectedIndex', 0)
+                        //             .prop('required', true)
+                        //             .prop('disabled', false);
+                        //     }
+                        //     if (teeshirt === 'NON'){
+                        //         $('#montantTotal').text(response.montant)
+                        //         $('#hiddenMontant').append(response.montant)
+                        //         $('#selectTaille')
+                        //             .prop('value','')
+                        //             .prop('required', false)
+                        //             .prop('disabled', true);
+                        //     }
+                        // })
                     })
                     .fail((xhr,status, error) =>{
                         swal.fire('error', "Une erreur s'est produit lors de la récupération des données: " + error)
@@ -146,18 +147,46 @@
                     data: JSON.stringify(formData),
                     success: function (response) {
                         console.log(response)
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Yes! étape validée! 👍',
-                            text: "Et voilà, il ne te reste plus que de payer avec le pingouin bleu 🐧 comme ta tenue 🤣😂",
-                            confirmButtonText: 'OK'
-                        }).then((result) => {
-                            /* Read more about isConfirmed, isDenied below */
-                            if (result.isConfirmed) {
-                                console.log(response)
-                                window.location = "{{ absolute_url(path('app_home')) }}recu/" + response.matricule
-                            }
-                        });
+
+                        // const axios = require('axios');
+
+                        const api_key = "wave_ci_prod_lohtz8P1PeX3LYnul5FtKelEq4V972UjRDO8frGaUwiTruGhYJzlMmsobR_K3QGb5HIUN4goZrzRrBtTrAq1Yl3bIkgqnw-FVQ";
+
+                        const checkout_params = {
+                            amount: response.montant,
+                            currency: "XOF",
+                            error_url: "{{ absolute_url(path('app_backend_dashboard')) }}",
+                            success_url: "{{ absolute_url(path('app_home')) }}recu/" + response.matricule,
+                        };
+
+                        axios.post('https://api.wave.com/v1/checkout/sessions', checkout_params, {
+                            headers: {
+                                'Authorization': `Bearer ${api_key}`,
+                                'Content-Type': 'application/json',
+                            },
+                        })
+                            .then((response) => {
+                                // You can now use the response to redirect the user to the Wave app
+                                const wave_launch_url = response.data.wave_launch_url;
+                                window.location.href = wave_launch_url;
+                            })
+                            .catch((error) => {
+                                console.error(error);
+                            });
+
+                        {#Swal.fire({#}
+                        {#    icon: 'success',#}
+                        {#    title: 'Yes! étape validée! 👍',#}
+                        {#    text: "Et voilà, il ne te reste plus que de payer avec le pingouin bleu 🐧 comme ta tenue 🤣😂",#}
+                        {#    confirmButtonText: 'OK'#}
+                        {#}).then((result) => {#}
+                        {#    /* Read more about isConfirmed, isDenied below */#}
+                        {#    if (result.isConfirmed) {#}
+                        {#        console.log(response)#}
+                        {#        window.location = "{{ absolute_url(path('app_home')) }}recu/" + response.matricule#}
+                        {#    }#}
+                        {#});#}
+
                     },
                     error: function(xhr, status, error) {
                         // Gérez les erreurs ici (par exemple, affichez un message d'erreur)
