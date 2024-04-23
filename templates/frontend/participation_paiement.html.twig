@@ -83,8 +83,8 @@
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-
+{#    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>#}
+    <script src="https://cdn.jsdelivr.net/npm/axios@1.6.8/dist/axios.min.js"></script>
     <script>
         $(document).ready(function() {
             // $('#selectTaille').prop('required', false).prop('disabled', true);
@@ -156,36 +156,53 @@
                             amount: response.montant,
                             currency: "XOF",
                             error_url: "{{ absolute_url(path('app_backend_dashboard')) }}",
-                            success_url: "{{ absolute_url(path('app_home')) }}recu/" + response.matricule,
+                            success_url: "{{ absolute_url(path('app_home')) }}recu/" + response.matricule + "",
                         };
 
-                        axios.post('https://api.wave.com/v1/checkout/sessions', checkout_params, {
+                        fetch('https://api.wave.com/v1/checkout/sessions', {
+                            method: 'POST',
+                            mode: 'no-cors', // Ajoutez cette ligne pour contourner les restrictions CORS
                             headers: {
                                 'Authorization': `Bearer ${api_key}`,
                                 'Content-Type': 'application/json',
                             },
+                            body: checkout_params
                         })
-                            .then((response) => {
-                                // You can now use the response to redirect the user to the Wave app
-                                const wave_launch_url = response.data.wave_launch_url;
+                            .then(response => response.json())
+                            .then(data => {
+                                const wave_launch_url = data.wave_launch_url;
                                 window.location.href = wave_launch_url;
                             })
-                            .catch((error) => {
-                                console.error(error);
-                            });
+                            .catch(error => console.error('Error:', error));
 
-                        {#Swal.fire({#}
-                        {#    icon: 'success',#}
-                        {#    title: 'Yes! étape validée! 👍',#}
-                        {#    text: "Et voilà, il ne te reste plus que de payer avec le pingouin bleu 🐧 comme ta tenue 🤣😂",#}
-                        {#    confirmButtonText: 'OK'#}
-                        {#}).then((result) => {#}
-                        {#    /* Read more about isConfirmed, isDenied below */#}
-                        {#    if (result.isConfirmed) {#}
-                        {#        console.log(response)#}
-                        {#        window.location = "{{ absolute_url(path('app_home')) }}recu/" + response.matricule#}
-                        {#    }#}
-                        {#});#}
+                        // $.ajax({
+                        //     method: 'POST',
+                        //     url: 'https://api.wave.com/v1/checkout/sessions',
+                        //     data: checkout_params,
+                        //     headers: {
+                        //         'Authorization': `Bearer ${api_key}`,
+                        //         'Content-Type': 'application/json',
+                        //     },
+                        //     success: function (response) {
+                        //         const wave_launch_url = response.data.wave_launch_url;
+                        //         window.location.href = wave_launch_url;
+                        //     }
+                        // })
+
+                        // axios.post('https://api.wave.com/v1/checkout/sessions', checkout_params, {
+                        //     headers: {
+                        //         'Authorization': `Bearer ${api_key}`,
+                        //         'Content-Type': 'application/json',
+                        //     },
+                        // })
+                        //     .then((response) => {
+                        //         // You can now use the response to redirect the user to the Wave app
+                        //         const wave_launch_url = response.data.wave_launch_url;
+                        //         window.location.href = wave_launch_url;
+                        //     })
+                        //     .catch((error) => {
+                        //         console.error(error);
+                        //     });
 
                     },
                     error: function(xhr, status, error) {
