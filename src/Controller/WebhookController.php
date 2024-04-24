@@ -33,7 +33,7 @@ class WebhookController extends AbstractController
         $webhook_data = $webhook_json->data;
 
         $aspirant = $this->allRepositories->getAspirantByWaveId($webhook_data['id']);
-        if (!$aspirant) return;
+        if (!$aspirant) return new Response('Webhook echec', Response::HTTP_OK);
 
         $aspirant->setWaveCheckoutStatus($webhook_data['checkout_status']);
         $aspirant->setWavePaymentStatus($webhook_data['payment_status']);
