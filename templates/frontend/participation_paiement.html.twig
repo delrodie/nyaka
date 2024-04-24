@@ -165,10 +165,10 @@
                             "{{ absolute_url(path('app_api_wave_checkout')) }}", checkout_params
                         )
                             .then((response) => {
-                                // You can now use the response to redirect the user to the Wave app
-                                // const wave_launch_url = response.data.wave_launch_url;
-                                // window.location.href = wave_launch_url;
                                 console.log(response)
+                                // You can now use the response to redirect the user to the Wave app
+                                const wave_launch_url = response.data.wave_launch_url;
+                                window.location.href = wave_launch_url;
                             })
                             .catch((error) => {
                                 console.error(error);
