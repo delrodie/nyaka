@@ -50,7 +50,7 @@ class RecuController extends AbstractController
             $message =  "HTTP Error ".$response->getStatusCode();
         }else{
             $message = $response->toArray();
-            dd($message['id']);
+            
         }
 
         return $message;
