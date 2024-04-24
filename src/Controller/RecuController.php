@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Service\AllRepositories;
 use App\Service\Gestion;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,7 +17,8 @@ class RecuController extends AbstractController
     public function __construct(
         private Gestion $gestion,
         private AllRepositories $allRepositories,
-        private HttpClientInterface $httpClient
+        private HttpClientInterface $httpClient,
+        private EntityManagerInterface $entityManager
     )
     {
     }
@@ -27,7 +29,9 @@ class RecuController extends AbstractController
         $aspirant = $this->allRepositories->getOneAspirant(null, $matricule);
 
         if ($aspirant && $aspirant->getWaveCheckoutStatus() !== 'complete'){
-            dd($this->wave($aspirant));
+
+            $wave = $this->wave($aspirant);
+            if ($wave !== true) return new Response ($wave);
         }
         return $this->render('frontend/recu_search.html.twig',[
             'aspirant' => $aspirant,
@@ -47,12 +51,18 @@ class RecuController extends AbstractController
         );
 
         if ($response->getStatusCode() !== 200){
-            $message =  "HTTP Error ".$response->getStatusCode();
-        }else{
-            $message = $response->toArray();
-            
+            return  "HTTP Error ".$response->getStatusCode();
         }
 
-        return $message;
+        $data = $response->toArray();
+
+        $aspirant->setWaveCheckoutStatus($data['checkout_status']);
+        $aspirant->setWavePaymentStatus($data['payment_status']);
+        $aspirant->setWaveWhenCompleted($data['when_completed']);
+        $aspirant->setWaveTransactionId($data['transaction_id']);
+
+        $this->entityManager->flush();
+
+        return true;
     }
 }
