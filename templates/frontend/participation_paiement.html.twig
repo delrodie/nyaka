@@ -168,7 +168,8 @@
                                 console.log(response)
                                 // You can now use the response to redirect the user to the Wave app
                                 const wave_launch_url = response.data.wave_launch_url;
-                                window.location.href = wave_launch_url;
+                                // window.location.href = wave_launch_url;
+                                console.log(response.data)
                             })
                             .catch((error) => {
                                 console.error(error);
