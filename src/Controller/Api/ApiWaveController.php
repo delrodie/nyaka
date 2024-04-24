@@ -43,7 +43,7 @@ class ApiWaveController extends AbstractController
 
 //            dd($this->json($response));
 
-            return $this->json($response->getContent());
+            return $this->json($response);
         } catch (\Exception $exception){
             return new JsonResponse(['error' => $exception->getMessage()], 500);
         }
