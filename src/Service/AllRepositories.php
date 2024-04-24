@@ -142,7 +142,8 @@ class AllRepositories
         $aspirant = $this->aspirantRepository->findOneBy([
             'nom' => $nom,
             'prenoms' => $prenom,
-            'contact' => $contact
+            'contact' => $contact,
+//            'wave_checkout_status' => 'complete',
         ]);
 
         if ($aspirant) return true;

@@ -92,7 +92,7 @@ class ApiParticipationController extends AbstractController
 
         // Verification de la non existence de l'aspirant dans le système
         $exist = $this->allRepositories->verifAspirant($identite['nom'], $identite['prenom'], $identite['contact']);
-        if ($exist){
+        if ($exist && $exist->getWaveCheckoutStatus() === 'complete'){
             sweetalert()->addError("Echèc! Ce participant a déjà été enregistré dans le système.");
             return new JsonResponse('Echec', Response::HTTP_OK,[], true);
         }
