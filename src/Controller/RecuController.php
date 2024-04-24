@@ -26,7 +26,7 @@ class RecuController extends AbstractController
     {
         $aspirant = $this->allRepositories->getOneAspirant(null, $matricule);
 
-        if ($aspirant){
+        if ($aspirant && $aspirant->getWaveCheckoutStatus() !== 'complete'){
             dd($this->wave($aspirant));
         }
         return $this->render('frontend/recu_search.html.twig',[
@@ -50,6 +50,7 @@ class RecuController extends AbstractController
             $message =  "HTTP Error ".$response->getStatusCode();
         }else{
             $message = $response->toArray();
+            dd($message['id']);
         }
 
         return $message;
