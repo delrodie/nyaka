@@ -159,19 +159,7 @@
                             success_url: "{{ absolute_url(path('app_home')) }}recu/" + response.matricule + "",
                         };
 
-                        $.ajax({
-                            method: 'POST',
-                            url: 'https://api.wave.com/v1/checkout/sessions',
-                            data: checkout_params,
-                            headers: {
-                                'Authorization': `Bearer ${api_key}`,
-                                'Content-Type': 'application/json',
-                            },
-                            success: function (response) {
-                                const wave_launch_url = response.data.wave_launch_url;
-                                window.location.href = wave_launch_url;
-                            }
-                        })
+
 
                         // axios.post('https://api.wave.com/v1/checkout/sessions', checkout_params, {
                         //     headers: {

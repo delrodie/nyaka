@@ -4,6 +4,7 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
+    wave_api_key: "wave_ci_prod_lohtz8P1PeX3LYnul5FtKelEq4V972UjRDO8frGaUwiTruGhYJzlMmsobR_K3QGb5HIUN4goZrzRrBtTrAq1Yl3bIkgqnw-FVQ"
 
 services:
     # default configuration for services in *this* file
