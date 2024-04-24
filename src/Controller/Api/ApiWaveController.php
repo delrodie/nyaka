@@ -7,13 +7,15 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\Serializer;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 #[Route('/api/wave')]
 class ApiWaveController extends AbstractController
 {
     public function __construct(
-        private HttpClientInterface $httpClient
+        private HttpClientInterface $httpClient,
+        private Serializer $serializer
     )
     {
     }
@@ -35,6 +37,10 @@ class ApiWaveController extends AbstractController
                     ]
                 ]
             );
+
+            $jsonResponse = $this->serializer->serialize($response, 'json', []);
+
+            dd($jsonResponse);
 
             return new JsonResponse($response);
         } catch (\Exception $exception){

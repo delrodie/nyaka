@@ -130,30 +130,4 @@ class ApiParticipationController extends AbstractController
         return new JsonResponse($jsonAspirant, Response::HTTP_CREATED, [], true);
     }
 
-    public function wave($matricule, $montant)
-    {
-        $api_key = "wave_ci_prod_lohtz8P1PeX3LYnul5FtKelEq4V972UjRDO8frGaUwiTruGhYJzlMmsobR_K3QGb5HIUN4goZrzRrBtTrAq1Yl3bIkgqnw-FVQ";
-
-        $checkout_params = [
-            'amount' => '100',
-            'currency' => 'XOF',
-            'error_url' => $this->generateUrl('app_home',[],UrlGeneratorInterface::ABSOLUTE_URL),
-            'success_url' => $this->generateUrl('app_home',[],UrlGeneratorInterface::ABSOLUTE_URL).'recu/'.$matricule.'',
-        ];
-
-//        dd(json_encode($checkout_params));
-
-        $response = $this->httpClient->request(
-            'POST',
-            'https://api.wave.com/v1/checkout/sessions',[
-                'json' => $checkout_params ,
-                'headers' => [
-                    'Authorization' => 'Bearer ' . $api_key,
-                    'Content-Type' => 'application/json',
-                ]
-            ]
-        );
-
-        return $response;
-    }
 }
