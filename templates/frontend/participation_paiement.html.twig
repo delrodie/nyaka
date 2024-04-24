@@ -173,6 +173,7 @@
                                 console.log(response.data.statusCode)
                                 console.log(response.data.content)
                                 console.log(content.wave_launch_url)
+                                window.location.href = content.wave_launch_url
                             })
                             .catch((error) => {
                                 console.error(error);
