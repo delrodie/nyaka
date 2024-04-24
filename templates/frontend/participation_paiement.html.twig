@@ -70,7 +70,7 @@
 
                     <div class="col-12 mt-5 d-grid gap-2">
                         <input type="hidden" name="inputMontant" id="hiddenMontant" >
-                        <button type="submit" class="btn btn-primary btn-lg">Valider</button>
+                        <button type="submit" id="submitBtn" class="btn btn-primary btn-lg">Valider</button>
                     </div>
                 </div>
             </form>
@@ -87,6 +87,18 @@
     <script src="https://cdn.jsdelivr.net/npm/axios@1.6.8/dist/axios.min.js"></script>
     <script>
         $(document).ready(function() {
+            // Fonction pour désactiver le bouton de soumission et afficher un effet de chargement
+            function setLoadingState() {
+                $('#submitBtn').prop('disabled', true).html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> En cours...');
+                $('#loader-overlay').show(); // Afficher l'effet de chargement sur toute la page
+            }
+
+            // Fonction pour réactiver le bouton de soumission et masquer l'effet de chargement
+            function resetLoadingState() {
+                $('#submitBtn').prop('disabled', false).html('Valider');
+                $('#loader-overlay').hide(); // Masquer l'effet de chargement sur toute la page
+            }
+
             // $('#selectTaille').prop('required', false).prop('disabled', true);
             $('#selectGrade').on('change', function () {
                 let gradeId = $(this).val();
@@ -131,6 +143,8 @@
 
             $('#formValidation').submit(function (e) {
                 e.preventDefault();
+
+                setLoadingState();
 
                 var formData = {
                     grade: $('#selectGrade').val(),
