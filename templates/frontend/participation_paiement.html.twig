@@ -170,7 +170,9 @@
                                 // const wave_launch_url = response.data.wave_launch_url;
                                 // window.location.href = wave_launch_url;
                                 console.log(response.data.statusCode)
-                                console.log(response.data.content.wave_launch_url)
+                                console.log(response.data.content)
+                                console.log(response.data.content.data)
+                                console.log(response.data.content.id)
                             })
                             .catch((error) => {
                                 console.error(error);
