@@ -153,7 +153,7 @@
                         const api_key = "wave_ci_prod_lohtz8P1PeX3LYnul5FtKelEq4V972UjRDO8frGaUwiTruGhYJzlMmsobR_K3QGb5HIUN4goZrzRrBtTrAq1Yl3bIkgqnw-FVQ";
 
                         const checkout_params = {
-                            amount: response.montant,
+                            amount: "" + response.montant + "",
                             currency: "XOF",
                             error_url: "{{ absolute_url(path('app_backend_dashboard')) }}",
                             success_url: "{{ absolute_url(path('app_home')) }}recu/" + response.matricule + "",
@@ -161,20 +161,18 @@
 
 
 
-                        // axios.post('https://api.wave.com/v1/checkout/sessions', checkout_params, {
-                        //     headers: {
-                        //         'Authorization': `Bearer ${api_key}`,
-                        //         'Content-Type': 'application/json',
-                        //     },
-                        // })
-                        //     .then((response) => {
-                        //         // You can now use the response to redirect the user to the Wave app
-                        //         const wave_launch_url = response.data.wave_launch_url;
-                        //         window.location.href = wave_launch_url;
-                        //     })
-                        //     .catch((error) => {
-                        //         console.error(error);
-                        //     });
+                        axios.post(
+                            "{{ absolute_url(path('app_api_wave_checkout')) }}", checkout_params
+                        )
+                            .then((response) => {
+                                // You can now use the response to redirect the user to the Wave app
+                                // const wave_launch_url = response.data.wave_launch_url;
+                                // window.location.href = wave_launch_url;
+                                console.log(response)
+                            })
+                            .catch((error) => {
+                                console.error(error);
+                            });
 
                     },
                     error: function(xhr, status, error) {
