@@ -124,6 +124,11 @@ class AllRepositories
         return $this->aspirantRepository->findOneBy([],['id' => $id]);
     }
 
+    public function getAspirantByWaveId($wave_id): ?Aspirant
+    {
+        return $this->aspirantRepository->findOneBy(['wave_id' => $wave_id]);
+    }
+
     /**
      * Verification de l'existence de l'aspirant dans le système
      *
