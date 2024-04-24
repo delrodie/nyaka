@@ -26,7 +26,7 @@ class WebhookController extends AbstractController
         $wave_signature = $request->headers->get('Wave-Signature');
         $webhook_body = $request->getContent();
 
-//        dd($webhook_body);
+//        dd($wave_signature);
 
         $webhook_json = $this->webhook_verify_signature_and_decode($wave_webhook_secret, $wave_signature, $webhook_body);
 
@@ -52,6 +52,7 @@ class WebhookController extends AbstractController
         $parts = explode(",", $wave_signature);
         $timestamp = explode("=", $parts[0])[1];
 //        $timestamp = explode("=", $parts[0]);
+//        dd($timestamp);
 
         $signatures = array();
         foreach (array_slice($parts, 1) as $signature) {
@@ -60,6 +61,8 @@ class WebhookController extends AbstractController
 
         $computed_hmac = hash_hmac("sha256", $timestamp . $webhook_body, $wave_webhook_secret);
         $valid = in_array($computed_hmac, $signatures);
+
+//        dd($valid);
 
         if($valid) {
             return json_decode($webhook_body);

@@ -5,7 +5,7 @@
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
     wave_api_key: 'wave_ci_prod_lohtz8P1PeX3LYnul5FtKelEq4V972UjRDO8frGaUwiTruGhYJzlMmsobR_K3QGb5HIUN4goZrzRrBtTrAq1Yl3bIkgqnw-FVQ'
-    wave_webhook_secret: 'WH_zVNg02FZ8jFa'
+    wave_webhook_secret: 'WH_A0iNtStwnWzh'
 
 services:
     # default configuration for services in *this* file
