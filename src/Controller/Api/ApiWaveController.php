@@ -5,6 +5,7 @@ namespace App\Controller\Api;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
@@ -35,9 +36,7 @@ class ApiWaveController extends AbstractController
                 ]
             );
 
-            dd($response);
-
-            return new JsonResponse($response->toArray(), $response->getStatusCode());
+            return new JsonResponse($response, Response::HTTP_OK, [], true);
         } catch (\Exception $exception){
             return new JsonResponse(['error' => $exception->getMessage()], 500);
         }
