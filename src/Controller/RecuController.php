@@ -38,7 +38,7 @@ class RecuController extends AbstractController
     {
         $response = $this->httpClient->request(
             'GET',
-            "https://api.wave.com/v1/checkout/sessions/{$aspirant->getWaveCheckoutId()}",[
+            "https://api.wave.com/v1/checkout/sessions/{$aspirant->getWaveId()}",[
                 'headers' => [
                     'Authorization' => 'Bearer '.$this->getParameter('wave_api_key'),
                 ],
