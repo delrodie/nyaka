@@ -39,7 +39,7 @@ class ApiWaveController extends AbstractController
                 ]
             );
 
-            dd($response);
+            dd($response->getStatusCode());
 
             return $this->json($response);
         } catch (\Exception $exception){
