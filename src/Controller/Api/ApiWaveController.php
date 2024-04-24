@@ -35,6 +35,8 @@ class ApiWaveController extends AbstractController
                 ]
             );
 
+            dd($response);
+
             return new JsonResponse($response->toArray(), $response->getStatusCode());
         } catch (\Exception $exception){
             return new JsonResponse(['error' => $exception->getMessage()], 500);
