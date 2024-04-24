@@ -26,21 +26,23 @@ class WebhookController extends AbstractController
         $wave_signature = $request->headers->get('Wave-Signature');
         $webhook_body = $request->getContent();
 
+//        dd($webhook_body);
+
         $webhook_json = $this->webhook_verify_signature_and_decode($wave_webhook_secret, $wave_signature, $webhook_body);
 
         // Vous pouvez maintenant utiliser les données du webhook pour traiter la demande :
         $webhook_type = $webhook_json->type;
         $webhook_data = $webhook_json->data;
 
-        $aspirant = $this->allRepositories->getAspirantByWaveId($webhook_data['id']);
-        if (!$aspirant) return new Response('Webhook echec', Response::HTTP_OK);
-
-        $aspirant->setWaveCheckoutStatus($webhook_data['checkout_status']);
-        $aspirant->setWavePaymentStatus($webhook_data['payment_status']);
-        $aspirant->setWaveWhenCompleted($webhook_data['when_completed']);
-        $aspirant->setWaveTransactionId($webhook_data['transaction_id']);
-
-        $this->entityManager->flush();
+//        $aspirant = $this->allRepositories->getAspirantByWaveId($webhook_data['id']);
+//        if (!$aspirant) return new Response('Webhook echec', Response::HTTP_OK);
+//
+//        $aspirant->setWaveCheckoutStatus($webhook_data['checkout_status']);
+//        $aspirant->setWavePaymentStatus($webhook_data['payment_status']);
+//        $aspirant->setWaveWhenCompleted($webhook_data['when_completed']);
+//        $aspirant->setWaveTransactionId($webhook_data['transaction_id']);
+//
+//        $this->entityManager->flush();
 
         return new Response('Webhook handled', Response::HTTP_OK);
     }
@@ -49,6 +51,7 @@ class WebhookController extends AbstractController
     {
         $parts = explode(",", $wave_signature);
         $timestamp = explode("=", $parts[0])[1];
+//        $timestamp = explode("=", $parts[0]);
 
         $signatures = array();
         foreach (array_slice($parts, 1) as $signature) {
