@@ -127,11 +127,17 @@ class Gestion
     {
         $vicariatEntity = $this->allRepositories->getOneVicariat(null, $vicariat);
 
-        $nombreAleatoire = random_int(10000,99999);
+        do{
+            $nombreAleatoire = random_int(10000,99999);
 
-        $lettreAleatoire = chr(rand(65, 90));
+            $lettreAleatoire = chr(rand(65, 90));
 
-        return $vicariatEntity->getCode().''.$nombreAleatoire.''.$lettreAleatoire;
+            $matricule = $vicariatEntity->getCode().''.$nombreAleatoire.''.$lettreAleatoire;
+
+            $verif = $this->allRepositories->getOneAspirant(null, $matricule);
+        } while($verif);
+
+        return $matricule;
     }
 
     /**

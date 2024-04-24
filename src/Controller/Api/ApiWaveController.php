@@ -39,9 +39,7 @@ class ApiWaveController extends AbstractController
                 ]
             );
 
-//            $jsonResponse = $this->serializer->serialize($response, 'json', []);
-
-//            dd($this->json($response));
+            dd($response);
 
             return $this->json($response);
         } catch (\Exception $exception){

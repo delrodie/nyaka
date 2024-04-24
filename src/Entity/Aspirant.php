@@ -77,6 +77,27 @@ class Aspirant
     #[Groups('participation')]
     private ?\DateTimeInterface $updatedAt = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $wave_id = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $wave_checkout_status = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $wave_client_reference = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $wave_payment_status = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $wave_transaction_id = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $wave_when_completed = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $wave_when_created = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -272,5 +293,89 @@ class Aspirant
     public function setUpdateAtValue(): \DateTime
     {
         return $this->updatedAt = new \DateTime();
+    }
+
+    public function getWaveId(): ?string
+    {
+        return $this->wave_id;
+    }
+
+    public function setWaveId(?string $wave_id): static
+    {
+        $this->wave_id = $wave_id;
+
+        return $this;
+    }
+
+    public function getWaveCheckoutStatus(): ?string
+    {
+        return $this->wave_checkout_status;
+    }
+
+    public function setWaveCheckoutStatus(?string $wave_checkout_status): static
+    {
+        $this->wave_checkout_status = $wave_checkout_status;
+
+        return $this;
+    }
+
+    public function getWaveClientReference(): ?string
+    {
+        return $this->wave_client_reference;
+    }
+
+    public function setWaveClientReference(?string $wave_client_reference): static
+    {
+        $this->wave_client_reference = $wave_client_reference;
+
+        return $this;
+    }
+
+    public function getWavePaymentStatus(): ?string
+    {
+        return $this->wave_payment_status;
+    }
+
+    public function setWavePaymentStatus(?string $wave_payment_status): static
+    {
+        $this->wave_payment_status = $wave_payment_status;
+
+        return $this;
+    }
+
+    public function getWaveTransactionId(): ?string
+    {
+        return $this->wave_transaction_id;
+    }
+
+    public function setWaveTransactionId(?string $wave_transaction_id): static
+    {
+        $this->wave_transaction_id = $wave_transaction_id;
+
+        return $this;
+    }
+
+    public function getWaveWhenCompleted(): ?string
+    {
+        return $this->wave_when_completed;
+    }
+
+    public function setWaveWhenCompleted(?string $wave_when_completed): static
+    {
+        $this->wave_when_completed = $wave_when_completed;
+
+        return $this;
+    }
+
+    public function getWaveWhenCreated(): ?string
+    {
+        return $this->wave_when_created;
+    }
+
+    public function setWaveWhenCreated(?string $wave_when_created): static
+    {
+        $this->wave_when_created = $wave_when_created;
+
+        return $this;
     }
 }

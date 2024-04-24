@@ -117,6 +117,7 @@ class ApiParticipationController extends AbstractController
 
         $session->set('base', '');
         $session->set('identite', '');
+        $session->set('aspirant', $aspirant->getMatricule());
 
         $jsonAspirant = $this->serializer->serialize($aspirant, 'json', [
             'groups' => 'participation',
