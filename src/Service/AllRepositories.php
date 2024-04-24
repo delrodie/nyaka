@@ -143,7 +143,7 @@ class AllRepositories
             'nom' => $nom,
             'prenoms' => $prenom,
             'contact' => $contact,
-//            'wave_checkout_status' => 'complete',
+            'wave_checkout_status' => 'complete',
         ]);
 
         if ($aspirant) return true;
