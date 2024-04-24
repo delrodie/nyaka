@@ -27,7 +27,7 @@ class ApiWaveController extends AbstractController
             $response = $this->httpClient->request(
                 'POST',
                 'https://api.wave.com/v1/checkout/sessions',[
-                    'json' => $request->getContent(),
+                    'json' => $data,
                     'headers' => [
                         'Authorization' => 'Bearer ' . $this->getParameter('wave_api_key'),
                         'Content-Type' => 'application/json',
