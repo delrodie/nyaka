@@ -41,10 +41,13 @@
                     <div class="col-4 libelle">Sexe</div>
                     <div class="col-8 valeur">: {{ aspirant.sexe }}</div>
                 </div>
-                <div class="row mt-2">
-                    <div class="col-4 libelle">Contact</div>
-                    <div class="col-8 valeur">: {{ aspirant.contact }}</div>
-                </div>
+                {% if aspirant.contact %}
+                    <div class="row mt-2">
+                        <div class="col-4 libelle">Contact</div>
+                        <div class="col-8 valeur">: {{ aspirant.contact }}</div>
+                    </div>
+                {% endif %}
+
                 <div class="row mt-2">
                     <div class="col-4 libelle">Urgence</div>
                     <div class="col-8 valeur">: {{ aspirant.urgence }} / {{ aspirant.contactUrgence }}</div>
@@ -69,7 +72,7 @@
                 </div>
                 <div class="row mt-2">
                     <div class="col-4 libelle">Tee-shirt</div>
-                    <div class="col-8 valeur">: {{ aspirant.teeshirt }} </div>
+                    <div class="col-8 valeur">: OUI </div>
                 </div>
                 <div class="row mt-2">
                     <div class="col-4 libelle">Taille</div>
@@ -81,7 +84,7 @@
                 </div>
                 <div class="row mt-5 text-end">
                     <div class="col-12">
-                        <em>inscription effectuée le {{ aspirant.createdAt|date('d-m-Y H:i:s') }}</em>
+                        <em>inscription effectuée le {{ aspirant.waveWhenCreated|date('d-m-Y H:i:s') }}</em>
                     </div>
                 </div>
             </div>
