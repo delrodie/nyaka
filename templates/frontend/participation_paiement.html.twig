@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}NYAKA NANSI 2024 - Inscription {% endblock %}
+{% block title %}NYAKA NANSI 2024 - Finalisation {% endblock %}
 
 {% block body %}
     <div class="overflow-hidden">
@@ -33,30 +33,17 @@
                             {% endfor %}
                         </select>
                     </div>
-{#                    <div class="col-6 mt-3">#}
-{#                        <div class="form-check form-switch">#}
-{#                            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">#}
-{#                            <label class="form-check-label" for="flexSwitchCheckDefault">Tee-shirt</label>#}
-{#                        </div>#}
-{#                    </div>#}
-{#                    <div class="col-6 mt-3">#}
-{#                        <label for="selectTeeshirt">Veux-tu un teeshirt?</label>#}
-{#                        <select name="selectTeeshirt" id="selectTeeshirt" class="form-select form-select-lg" required>#}
-{#                            <option value="">-</option>#}
-{#                            <option value="OUI">OUI</option>#}
-{#                            <option value="NON">NON</option>#}
-{#                        </select>#}
-{#                    </div>#}
+
                     <div class="col-lg-6 mt-3">
                         <label for="selectSexe">Taille du tee-shirt</label>
                         <select name="selectTaille" id="selectTaille" class="form-select form-select-lg" required>
-                            <option value=""></option>
-                            <option value="5-8ans">5-8ans</option>
-                            <option value="9-12ans">9-12ans</option>
-                            <option value="M">M</option>
-                            <option value="L">L</option>
-                            <option value="XL">XL</option>
-                            <option value="XXL">XXL</option>
+{#                            <option value=""></option>#}
+{#                            <option value="5-8ans">5-8ans</option>#}
+{#                            <option value="9-12ans">9-12ans</option>#}
+{#                            <option value="M">M</option>#}
+{#                            <option value="L">L</option>#}
+{#                            <option value="XL">XL</option>#}
+{#                            <option value="XXL">XXL</option>#}
                         </select>
                     </div>
 
@@ -85,7 +72,6 @@
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}
-{#    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>#}
     <script src="https://cdn.jsdelivr.net/npm/axios@1.6.8/dist/axios.min.js"></script>
     <script>
         $(document).ready(function() {
@@ -111,32 +97,23 @@
                         $('#montantTotal').empty()
                             .text(response.montant);
 
-                        // Réinitialiser la liste de sélection #selectTeeshirt
-                        // $('#selectTeeshirt');
+                        // Réinitialiser la liste de sélection des tailles de tee-shirt
+                        $('#selectTaille').empty();
 
-                        // $('#selectTeeshirt')
-                        //     .prop('selectedIndex', 0)
-                        //     .on('change', function(){
-                        //     let teeshirt = $(this).val();
-                        //     console.log(teeshirt)
-                        //     if (teeshirt === 'OUI'){
-                        //         let total = response.montant + response.teeshirt;
-                        //         $('#montantTotal').text(total);
-                        //         $('#hiddenMontant').append(total)
-                        //         $('#selectTaille')
-                        //             .prop('selectedIndex', 0)
-                        //             .prop('required', true)
-                        //             .prop('disabled', false);
-                        //     }
-                        //     if (teeshirt === 'NON'){
-                        //         $('#montantTotal').text(response.montant)
-                        //         $('#hiddenMontant').append(response.montant)
-                        //         $('#selectTaille')
-                        //             .prop('value','')
-                        //             .prop('required', false)
-                        //             .prop('disabled', true);
-                        //     }
-                        // })
+                        // Si le grade est "Benjamin" ou "Cadet", afficher uniquement les tailles avec tranche d'âge
+                        if (gradeId === '1' || gradeId === '2') {
+                            $('#selectTaille').append('<option value="">-</option>');
+                            $('#selectTaille').append('<option value="4-6ans">4-6ans</option>');
+                            $('#selectTaille').append('<option value="7-9ans">7-9ans</option>');
+                            $('#selectTaille').append('<option value="10-12ans">10-12ans</option>');
+                        } else {
+                            // Sinon, afficher toutes les autres tailles
+                            $('#selectTaille').append('<option value="">-</option>');
+                            $('#selectTaille').append('<option value="M">M</option>');
+                            $('#selectTaille').append('<option value="L">L</option>');
+                            $('#selectTaille').append('<option value="XL">XL</option>');
+                            $('#selectTaille').append('<option value="XXL">XXL</option>');
+                        }
                     })
                     .fail((xhr,status, error) =>{
                         swal.fire('error', "Une erreur s'est produit lors de la récupération des données: " + error)
@@ -164,15 +141,11 @@
                     success: function (response) {
                         console.log(response)
 
-                        // const axios = require('axios');
-
-                        // const api_key = "wave_ci_prod_lohtz8P1PeX3LYnul5FtKelEq4V972UjRDO8frGaUwiTruGhYJzlMmsobR_K3QGb5HIUN4goZrzRrBtTrAq1Yl3bIkgqnw-FVQ";
-
                         const checkout_params = {
                             amount: "" + response.montant + "",
                             currency: "XOF",
                             error_url: "{{ absolute_url(path('app_backend_dashboard')) }}",
-                            success_url: "{{ absolute_url(path('app_home')) }}recu/" + response.matricule + "",
+                            success_url: "https://www.cvav-diocesedabidjan.org/recu/" + response.matricule + "",
                         };
 
 
@@ -192,12 +165,13 @@
                                 window.location.href = content.wave_launch_url
                             })
                             .catch((error) => {
+                                resetLoadingState()
                                 console.error(error);
                             });
 
                     },
                     error: function(xhr, status, error) {
-                        // Gérez les erreurs ici (par exemple, affichez un message d'erreur)
+                        resetLoadingState()
                         Swal.fire({
                             icon: 'error',
                             title: 'Erreur!',
