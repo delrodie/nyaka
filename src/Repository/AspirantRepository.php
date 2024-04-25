@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Aspirant;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -39,9 +40,9 @@ class AspirantRepository extends ServiceEntityRepository
      * @param $grade
      * @return mixed
      */
-    public function getAllByGrade($grade): mixed
+    public function getAllByGrade($grade, $status = null): mixed
     {
-        return $this->createQueryBuilder('a')
+        $query = $this->createQueryBuilder('a')
             ->addSelect('s')
             ->addSelect('d')
             ->addSelect('v')
@@ -51,15 +52,79 @@ class AspirantRepository extends ServiceEntityRepository
             ->leftJoin('d.vicariat', 'v')
             ->leftJoin('a.grade', 'g')
             ->where('g.id = :grade')
-            ->setParameter('grade', $grade)
-            ->getQuery()->getResult();
+            ->setParameter('grade', $grade);
+
+        if ($status){
+            $query->andWhere('a.wave_checkout_status = :status')
+                ->setParameter('status', $status);
+        }
+
+
+        return $query->getQuery()->getResult();
     }
 
     public function getMontantTotal()
     {
         return $this->createQueryBuilder('a')
             ->select('SUM(a.montant)')
+            ->where('a.wave_checkout_status = :status')
+            ->setParameter('status', 'complete')
             ->getQuery()->getSingleScalarResult();
+    }
+
+    /**
+     * Liste des participants ayant effectué le paiement ou non
+     *
+     * @param $status
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    public function getAllByStatusCompletedOrNot($status = null, $order = null)
+    {
+        $query = $this->createQueryBuilder('a')
+            ->addSelect('s')
+            ->addSelect('d')
+            ->addSelect('v')
+            ->addSelect('g')
+            ->leftJoin('a.section', 's')
+            ->leftJoin('s.doyenne', 'd')
+            ->leftJoin('d.vicariat', 'v')
+            ->leftJoin('a.grade', 'g');
+        if ($status){
+            $query->where('a.wave_checkout_status = :status');
+        }
+        else{
+            $query->where('a.wave_checkout_status <> : status');
+        }
+
+        if ($order) $query->orderBy('a.wave_when_completed', $order);
+
+        return $query->setParameter('status', 'complete')
+            ->getQuery()->getResult() ;
+
+
+    }
+
+    public function getAllByVicariat($vicariat, $status = null): mixed
+    {
+        $query = $this->createQueryBuilder('a')
+            ->addSelect('s')
+            ->addSelect('d')
+            ->addSelect('v')
+            ->addSelect('g')
+            ->leftJoin('a.section', 's')
+            ->leftJoin('s.doyenne', 'd')
+            ->leftJoin('d.vicariat', 'v')
+            ->leftJoin('a.grade', 'g')
+            ->where('v.id = :vicariat')
+            ->setParameter('vicariat', $vicariat);
+
+        if ($status){
+            $query->andWhere('a.wave_checkout_status = :status')
+                ->setParameter('status', $status);
+        }
+
+
+        return $query->getQuery()->getResult();
     }
 
     //    /**
@@ -86,4 +151,5 @@ class AspirantRepository extends ServiceEntityRepository
     //            ->getOneOrNullResult()
     //        ;
     //    }
+
 }

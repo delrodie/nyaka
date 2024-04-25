@@ -20,9 +20,10 @@ class DashboardController extends AbstractController
     public function index(): Response
     {
         return $this->render('backend/dashboard.html.twig',[
-            'grades' => $this->allRepositories->getAspirantByGrade(),
+            'grades' => $this->allRepositories->getAspirantByGrade('complete'),
             'finance' => $this->allRepositories->getMontantTotalParticipation(),
-//            'aspirants' => $this->allRepositories->getas
+            'aspirants' => $this->allRepositories->getAllAspirantByStatus('complete', 'DESC'),
+            'vicariats' => $this->allRepositories->getAspirantsByVicariat('complete'),
         ]);
     }
 }

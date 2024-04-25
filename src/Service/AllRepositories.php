@@ -151,23 +151,61 @@ class AllRepositories
         return false;
     }
 
-    public function getAspirantByGrade()
+    public function getAspirantByGrade($status = null)
     {
         $grades = $this->getAllGrade();
 
         $liste=[]; $i=0;
         foreach ($grades as $grade){
+            if ($status) $aspirants = $this->aspirantRepository->getAllByGrade($grade->getId(), $status);
+            else    $aspirants = $this->aspirantRepository->getAllByGrade($grade->getId());
+
             $liste[$i++] = [
                 'grade' => $grade,
-                'aspirants' => $this->aspirantRepository->getAllByGrade($grade->getId())
+                'aspirants' => $aspirants
             ];
         }
 
         return $liste;
     }
 
-    public function getMontantTotalParticipation()
+    /**
+     * Montant total des inscrits
+     *
+     * @return bool|float|int|mixed|string|null
+     */
+    public function getMontantTotalParticipation(): mixed
     {
         return $this->aspirantRepository->getMontantTotal();
     }
+
+    /**
+     * Liste des participants ayant effectué le paiement ou pas
+     *
+     * @param $status
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    public function getAllAspirantByStatus($status=null, $order=null)
+    {
+        return $this->aspirantRepository->getAllByStatusCompletedOrNot($status, $order);
+    }
+
+    public function getAspirantsByVicariat($status = null)
+    {
+        $vicariats = $this->getAllVicariat();
+
+        $liste=[]; $i=0;
+        foreach ($vicariats as $vicariat){
+            if ($status) $aspirants = $this->aspirantRepository->getAllByVicariat($vicariat->getId(), $status);
+            else    $aspirants = $this->aspirantRepository->getAllByVicariat($vicariat->getId());
+
+            $liste[$i++] = [
+                'vicariat' => $vicariat,
+                'aspirants' => $aspirants
+            ];
+        }
+
+        return $liste;
+    }
+
 }
