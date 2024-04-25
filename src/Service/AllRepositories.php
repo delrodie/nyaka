@@ -151,7 +151,7 @@ class AllRepositories
         return false;
     }
 
-    public function getAspirantByGrade($status = null)
+    public function getAspirantByAllGrade($status = null)
     {
         $grades = $this->getAllGrade();
 
@@ -206,6 +206,26 @@ class AllRepositories
         }
 
         return $liste;
+    }
+
+    public function getAllAspirantByGradeID($id)
+    {
+        return $this->aspirantRepository->getAllByGrade($id, 'complete');
+    }
+
+    public function getAllAspirantByVicariatID($id)
+    {
+        return $this->aspirantRepository->getAllByVicariat($id, 'complete');
+    }
+
+    public function getAllAspirantByDoyenneID($id)
+    {
+        return $this->aspirantRepository->getAllByDoyenne($id, 'complete');
+    }
+
+    public function getAllAspirantBySectionID($id)
+    {
+        return $this->aspirantRepository->getAllBySection($id, 'complete');
     }
 
 }

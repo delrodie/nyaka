@@ -75,25 +75,16 @@ class AspirantRepository extends ServiceEntityRepository
     /**
      * Liste des participants ayant effectué le paiement ou non
      *
-     * @param $status
      * @return \Doctrine\ORM\QueryBuilder
      */
     public function getAllByStatusCompletedOrNot($status = null, $order = null)
     {
-        $query = $this->createQueryBuilder('a')
-            ->addSelect('s')
-            ->addSelect('d')
-            ->addSelect('v')
-            ->addSelect('g')
-            ->leftJoin('a.section', 's')
-            ->leftJoin('s.doyenne', 'd')
-            ->leftJoin('d.vicariat', 'v')
-            ->leftJoin('a.grade', 'g');
+        $query = $this->globalSelect();
         if ($status){
             $query->where('a.wave_checkout_status = :status');
         }
         else{
-            $query->where('a.wave_checkout_status <> : status');
+            $query->where('a.wave_checkout_status <> :status');
         }
 
         if ($order) $query->orderBy('a.wave_when_completed', $order);
@@ -106,15 +97,7 @@ class AspirantRepository extends ServiceEntityRepository
 
     public function getAllByVicariat($vicariat, $status = null): mixed
     {
-        $query = $this->createQueryBuilder('a')
-            ->addSelect('s')
-            ->addSelect('d')
-            ->addSelect('v')
-            ->addSelect('g')
-            ->leftJoin('a.section', 's')
-            ->leftJoin('s.doyenne', 'd')
-            ->leftJoin('d.vicariat', 'v')
-            ->leftJoin('a.grade', 'g')
+        $query = $this->globalSelect()
             ->where('v.id = :vicariat')
             ->setParameter('vicariat', $vicariat);
 
@@ -123,8 +106,43 @@ class AspirantRepository extends ServiceEntityRepository
                 ->setParameter('status', $status);
         }
 
-
         return $query->getQuery()->getResult();
+    }
+
+    public function getAllByDoyenne($doyenne, $status = null): mixed
+    {
+        $query = $this->globalSelect()
+            ->where('d.id = :doyenne')
+            ->setParameter('doyenne', $doyenne);
+
+        if ($status){
+            $query->andWhere('a.wave_checkout_status = :status')
+                ->setParameter('status', $status);
+        }
+        return $query->getQuery()->getResult();
+    }
+
+    public function getAllBySection($section, $status = null): mixed
+    {
+        $query = $this->globalSelect()
+            ->where('s.id = :section')
+            ->setParameter('section', $section);
+
+        if ($status){
+            $query->andWhere('a.wave_checkout_status = :status')
+                ->setParameter('status', $status);
+        }
+        return $query->getQuery()->getResult();
+    }
+
+    private function globalSelect()
+    {
+        return $this->createQueryBuilder('a')
+            ->addSelect('s', 'd', 'v', 'g')
+            ->leftJoin('a.section', 's')
+            ->leftJoin('s.doyenne', 'd')
+            ->leftJoin('d.vicariat', 'v')
+            ->leftJoin('a.grade', 'g');
     }
 
     //    /**
@@ -151,5 +169,6 @@ class AspirantRepository extends ServiceEntityRepository
     //            ->getOneOrNullResult()
     //        ;
     //    }
+
 
 }

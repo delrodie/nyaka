@@ -65,51 +65,57 @@
                     <li class="sidebar-item">
                         <a class="sidebar-link has-arrow" href="#" aria-expanded="false">
                               <span class="d-flex">
-                                <i class="ti-desktop"></i>
-                              </span>
-                            <span class="hide-menu">Activités</span>
-                        </a>
-                        <ul aria-expanded="false" class="collapse first-level">
-                            <li class="sidebar-item">
-                                <a href="{{ absolute_url(path('app_backend_aspirant_index')) }}" class="sidebar-link">
-                                    <div class="round-16 d-flex align-items-center justify-content-center">
-                                        <i class="ti-angle-right"></i>
-                                    </div>
-                                    <span class="hide-menu">Participants</span>
-                                </a>
-                            </li>
-                            <li class="sidebar-item">
-                                <a href="#" class="sidebar-link">
-                                    <div class="round-16 d-flex align-items-center justify-content-center">
-                                        <i class="ti-angle-right"></i>
-                                    </div>
-                                    <span class="hide-menu">Activités</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="sidebar-item">
-                        <a class="sidebar-link has-arrow" href="#" aria-expanded="false">
-                              <span class="d-flex">
                                 <i class="ti-user"></i>
                               </span>
                             <span class="hide-menu">Participants</span>
                         </a>
                         <ul aria-expanded="false" class="collapse first-level">
                             <li class="sidebar-item">
-                                <a href="{{ absolute_url(path('app_backend_aspirant_index')) }}" class="sidebar-link">
+                                <a href="{{ absolute_url(path('app_backend_participant_confirme')) }}" class="sidebar-link">
                                     <div class="round-16 d-flex align-items-center justify-content-center">
                                         <i class="ti-angle-right"></i>
                                     </div>
-                                    <span class="hide-menu">Grade</span>
+                                    <span class="hide-menu">Confirmés</span>
                                 </a>
                             </li>
                             <li class="sidebar-item">
-                                <a href="#" class="sidebar-link">
+                                <a href="{{ path('app_backend_participant_filtre', {'filtre': 'grade'}) }}" class="sidebar-link">
                                     <div class="round-16 d-flex align-items-center justify-content-center">
                                         <i class="ti-angle-right"></i>
                                     </div>
-                                    <span class="hide-menu">Activités</span>
+                                    <span class="hide-menu">Par Grade</span>
+                                </a>
+                            </li>
+                            <li class="sidebar-item">
+                                <a href="{{ path('app_backend_participant_filtre', {'filtre': 'vicariat'}) }}" class="sidebar-link">
+                                    <div class="round-16 d-flex align-items-center justify-content-center">
+                                        <i class="ti-angle-right"></i>
+                                    </div>
+                                    <span class="hide-menu">Par Vicariat</span>
+                                </a>
+                            </li>
+                            <li class="sidebar-item">
+                                <a href="{{ path('app_backend_participant_filtre', {'filtre': 'doyenne'}) }}" class="sidebar-link">
+                                    <div class="round-16 d-flex align-items-center justify-content-center">
+                                        <i class="ti-angle-right"></i>
+                                    </div>
+                                    <span class="hide-menu">Par Doyenne</span>
+                                </a>
+                            </li>
+                            <li class="sidebar-item">
+                                <a href="{{ path('app_backend_participant_filtre', {'filtre': 'section'}) }}" class="sidebar-link">
+                                    <div class="round-16 d-flex align-items-center justify-content-center">
+                                        <i class="ti-angle-right"></i>
+                                    </div>
+                                    <span class="hide-menu">Par Section</span>
+                                </a>
+                            </li>
+                            <li class="sidebar-item">
+                                <a href="{{ path('app_backend_aspirant_index') }}" class="sidebar-link">
+                                    <div class="round-16 d-flex align-items-center justify-content-center">
+                                        <i class="ti-angle-right"></i>
+                                    </div>
+                                    <span class="hide-menu">Aspirant</span>
                                 </a>
                             </li>
                         </ul>

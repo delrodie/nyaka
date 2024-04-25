@@ -18,7 +18,7 @@ class BackendAspirantController extends AbstractController
     public function index(AspirantRepository $aspirantRepository): Response
     {
         return $this->render('backend_aspirant/index.html.twig', [
-            'aspirants' => $aspirantRepository->getAll(),
+            'aspirants' => $aspirantRepository->getAllByStatusCompletedOrNot(),
         ]);
     }
 

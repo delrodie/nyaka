@@ -1,0 +1,171 @@
+{% extends 'backend_layout.html.twig' %}
+
+{% block title %}Liste des participants du vicariat "{{ vicariat ? vicariat.nom : '' }}"{% endblock %}
+
+{% block body %}
+
+    <div class="container-fluid">
+        <div class="card bg-light-info shadow-none position-relative overflow-hidden">
+            <div class="card-body px-4 py-3">
+                <div class="row align-items-center">
+                    <div class="col-9">
+                        <h4 class="fw-semibold mb-8">Liste des participants du vicariat "{{ vicariat ? vicariat.nom : '' }}"</h4>
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a class="text-muted" href="#">Modules</a></li>
+                                <li class="breadcrumb-item"><a class="text-muted" href="#">Participants</a></li>
+                                <li class="breadcrumb-item" aria-current="page">Confirmés</li>
+                            </ol>
+                        </nav>
+                    </div>
+                    <div class="col-3">
+                        <div class="text-center mb-n5">
+                            <span class="head-icon"><i class="ti-package"></i></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <section>
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="row">
+                                <div class="col"><h5 class="mb-2 fw-semibold fs-4">Liste</h5></div>
+
+                            </div>
+
+                        </div>
+                        <div class="card-body">
+                            <div class="row mt-3 mb-5">
+                                <div class="col-8 offset-2">
+                                    <form action="" onchange="this.submit()">
+                                        <select name="vicariatID" id="" class="form-select select-lg select2">
+                                            <option value="">-- SELECTIONNEZ LE VICARIAT --</option>
+                                            {% for vicariat in vicariats %}
+                                                <option value="{{ vicariat.id }}">{{ vicariat.nom }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </form>
+                                </div>
+                            </div>
+                            <div id="table-loader" class="table-loader">
+                                <div class="loader"></div>
+                            </div>
+                            <div class="table-responsive">
+                                <table id="listes" class="table  border table-striped table-bordered display text-nowrap">
+                                    <thead>
+                                    <tr>
+                                        <th class="text-center text-uppercase">#</th>
+{#                                        <th class="text-center text-uppercase">Vicariat</th>#}
+                                        <th class="text-center text-uppercase">Doyenne</th>
+                                        <th class="text-center text-uppercase">Section</th>
+                                        <th class="text-center text-uppercase">Nom</th>
+                                        <th class="text-center text-uppercase">Matricule</th>
+                                        <th class="text-center text-uppercase">Sexe</th>
+                                        <th class="text-center text-uppercase">Contact</th>
+                                        <th class="text-center text-uppercase">Urgence</th>
+                                        <th class="text-center text-uppercase">Contact Urgence</th>
+                                        <th class="text-center text-uppercase">Grade</th>
+                                        <th class="text-center text-uppercase">Taille</th>
+                                        <th class="text-center text-uppercase">Montant</th>
+                                        <th class="text-center text-uppercase">Date</th>
+                                        <th class="text-center text-uppercase">Recu</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for aspirant in participants %}
+                                        <tr>
+                                            <td>{{ loop.index }}</td>
+{#                                            <td class="">{{ aspirant.section.doyenne.vicariat.nom }}</td>#}
+                                            <td class="">{{ aspirant.section.doyenne.nom }}</td>
+                                            <td class="">{{ aspirant.section.paroisse }}</td>
+                                            <td class="">{{ aspirant.nom }} {{ aspirant.prenoms }}</td>
+                                            <td class="text-center">{{ aspirant.matricule }}</td>
+                                            <td class="text-center">{{ aspirant.sexe }}</td>
+                                            <td>{{ aspirant.contact }}</td>
+                                            <td class="text-center">{{ aspirant.urgence }}</td>
+                                            <td class="text-center">{{ aspirant.contactUrgence }}</td>
+                                           <td class="text-center">{{ aspirant.grade.nom }}</td>
+                                            <td class="text-center">{{ aspirant.taille }}</td>
+                                            <td class="text-center">{{ aspirant.montant }}</td>
+                                            <td class="text-center">{{ aspirant.waveWhenCreated|date('Y-m-d H:i:s') }}</td>
+                                            <td class="text-center">
+                                                <a href="{{ path('app_recu_show', {'matricule': aspirant.matricule}) }}" target="_blank">
+                                                    <i class="ti-file"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    {% else %}
+                                        <tr>
+                                            <td colspan="15" class="text-center">Aucun enregistrement</td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+    </div>
+
+{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('assets/vendor/css/prism.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/vendor/DataTables/datatables.min.css') }}">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('assets/vendor/js/prism.js') }}"></script>
+    <script src="{{ asset('assets/vendor/DataTables/datatables.min.js') }}"></script>
+    <script src="https://cdn.datatables.net/scroller/2.4.1/js/dataTables.scroller.js"></script>
+    <script src="https://cdn.datatables.net/scroller/2.4.1/js/scroller.bootstrap5.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            var tableLoader = $('#table-loader');
+            var table = $('#listes');
+
+            table.on('init.dt', function() {
+                tableLoader.find('.loader').hide();
+                table.show();
+            });
+
+            table.DataTable({
+                // Configurations du DataTable
+                dom: 'Bfrtip',
+                buttons: [
+                    'copy', 'excel', 'pdf'
+                ],
+                initComplete: function() {
+                    tableLoader.find('.loader').show();
+                    table.hide();
+                },
+                // scrollCollapse: true,
+                // scroller: true,
+                scrollX: 200
+            });
+        });
+    </script>
+    {#    <script>#}
+    {#        $('#listes').DataTable( {#}
+    {#            dom: 'Bfrtip',#}
+    {#            buttons: [#}
+    {#                'copy', 'excel', 'pdf'#}
+    {#            ]#}
+    {#        } );#}
+    {#    </script>#}
+    <script>
+        $(document).ready(function() {
+            $('.select2').select2();
+        });
+    </script>
+{% endblock %}

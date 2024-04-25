@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}NYAKA NANSI 2024 - Recu {% endblock %}
+{% block title %} {{ aspirant.nom|title }} {{ aspirant.prenoms|title}} - {{ aspirant.matricule}} {% endblock %}
 
 {% block body %}
     <div class="overflow-hidden">
@@ -117,7 +117,7 @@
         $(document).ready(function() {
             $('#print-button').on('click', function() {
                 window.print(); // Déclenche la boîte de dialogue d'impression du navigateur
-            });
+            }});
         });
     </script>
 {% endblock %}
