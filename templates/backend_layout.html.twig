@@ -120,6 +120,7 @@
                             </li>
                         </ul>
                     </li>
+                    {% if is_granted('ROLE_SUPER_ADMIN') %}
                     <li class="sidebar-item">
                         <a class="sidebar-link has-arrow" href="#" aria-expanded="false">
                               <span class="d-flex">
@@ -177,6 +178,8 @@
                             <span class="hide-menu">Utilisateurs</span>
                         </a>
                     </li>
+
+                    {% endif %}
 
                 </ul>
             </nav>
