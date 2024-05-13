@@ -38,6 +38,20 @@ class RecuController extends AbstractController
         ]);
     }
 
+    #[Route('/checkin/{matricule}', name: 'app_recu_checkin', methods: ['GET'])]
+    public function checkin($matricule)
+    {
+        $aspirant = $this->allRepositories->getOneAspirant(null, $matricule);
+
+        if ($aspirant && $aspirant->getWaveCheckoutStatus() !== 'complete'){
+
+            $wave = $this->wave($aspirant);
+            if ($wave !== true) return new Response ($wave);
+        }
+
+        return true;
+    }
+
     public function wave($aspirant)
     {
         $response = $this->httpClient->request(
