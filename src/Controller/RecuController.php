@@ -45,11 +45,10 @@ class RecuController extends AbstractController
 
         if ($aspirant && $aspirant->getWaveCheckoutStatus() !== 'complete'){
 
-            $wave = $this->wave($aspirant);
-            if ($wave !== true) return new Response ($wave);
+            $this->wave($aspirant);
         }
 
-        return true;
+        return $this->redirectToRoute('app_backend_aspirant_show',['id' => $aspirant->getId()]);
     }
 
     public function wave($aspirant)

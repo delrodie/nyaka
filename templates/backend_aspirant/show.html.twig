@@ -1,74 +1,110 @@
-{% extends 'base.html.twig' %}
+{% extends 'backend_layout.html.twig' %}
 
-{% block title %}Aspirant{% endblock %}
+{% block title %}{{ aspirant.nom }} {{ aspirant.prenoms }}{% endblock %}
 
 {% block body %}
-    <h1>Aspirant</h1>
+    <div class="container-fluid">
+        <div class="card bg-light-info shadow-none position-relative overflow-hidden">
+            <div class="card-body px-4 py-3">
+                <div class="row align-items-center">
+                    <div class="col-9">
+                        <h4 class="fw-semibold mb-8">Gestion des aspirants</h4>
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a class="text-muted" href="#">Modules</a></li>
+                                <li class="breadcrumb-item"><a class="text-muted" href="#">Participants</a></li>
+                                <li class="breadcrumb-item" aria-current="page">Aspirant</li>
+                            </ol>
+                        </nav>
+                    </div>
+                    <div class="col-3">
+                        <div class="text-center mb-n5">
+                            <span class="head-icon"><i class="ti-package"></i></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <section>
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="row">
+                                <div class="col"><h5 class="mb-2 fw-semibold fs-4">Les détails de </h5></div>
+                            </div>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ aspirant.id }}</td>
-            </tr>
-            <tr>
-                <th>Matricule</th>
-                <td>{{ aspirant.matricule }}</td>
-            </tr>
-            <tr>
-                <th>Nom</th>
-                <td>{{ aspirant.nom }}</td>
-            </tr>
-            <tr>
-                <th>Prenoms</th>
-                <td>{{ aspirant.prenoms }}</td>
-            </tr>
-            <tr>
-                <th>Sexe</th>
-                <td>{{ aspirant.sexe }}</td>
-            </tr>
-            <tr>
-                <th>Contact</th>
-                <td>{{ aspirant.contact }}</td>
-            </tr>
-            <tr>
-                <th>Urgence</th>
-                <td>{{ aspirant.urgence }}</td>
-            </tr>
-            <tr>
-                <th>ContactUrgence</th>
-                <td>{{ aspirant.contactUrgence }}</td>
-            </tr>
-            <tr>
-                <th>Montant</th>
-                <td>{{ aspirant.montant }}</td>
-            </tr>
-            <tr>
-                <th>Teeshirt</th>
-                <td>{{ aspirant.teeshirt }}</td>
-            </tr>
-            <tr>
-                <th>Taille</th>
-                <td>{{ aspirant.taille }}</td>
-            </tr>
-            <tr>
-                <th>MontantTeeshirt</th>
-                <td>{{ aspirant.montantTeeshirt }}</td>
-            </tr>
-            <tr>
-                <th>CreatedAt</th>
-                <td>{{ aspirant.createdAt ? aspirant.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>UpdatedAt</th>
-                <td>{{ aspirant.updatedAt ? aspirant.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-        </tbody>
-    </table>
+                        </div>
+                        <div class="card-body">
+                            <div class="card">
+                                <div class="row mt-3">
+                                    <div class="col-4">Matricule</div>
+                                    <div class="col-8">{{ aspirant.matricule }}</div>
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="col-4">Nom</div>
+                                    <div class="col-8">{{ aspirant.nom }}</div>
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="col-4">Prenoms</div>
+                                    <div class="col-8">{{ aspirant.prenoms }}</div>
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="col-4">Sexe</div>
+                                    <div class="col-8">{{ aspirant.sexe }}</div>
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="col-4">Contact</div>
+                                    <div class="col-8">{{ aspirant.contact }}</div>
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="col-4">Urgence</div>
+                                    <div class="col-8">{{ aspirant.urgence }} / {{ aspirant.contactUrgence }}</div>
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="col-4">Vicariat</div>
+                                    <div class="col-8">{{ aspirant.section.doyenne.vicariat.nom }}</div>
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="col-4">Doyenne</div>
+                                    <div class="col-8">{{ aspirant.section.doyenne.nom }}</div>
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="col-4">Paroisse</div>
+                                    <div class="col-8">{{ aspirant.section.paroisse }}</div>
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="col-4">Grade</div>
+                                    <div class="col-8">{{ aspirant.grade.nom }}</div>
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="col-4">Taille</div>
+                                    <div class="col-8">{{ aspirant.taille }}</div>
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="col-4">Montant payé</div>
+                                    <div class="col-8">{{ aspirant.montant|number_format(0,'','.') }}</div>
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="col-4">Wave CheckOut Satus</div>
+                                    <div class="col-8">{{ aspirant.waveCheckoutStatus }}</div>
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="col-4">Wave paiement</div>
+                                    <div class="col-8">{{ aspirant.wavePaymentStatus }}</div>
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="col-12">
+                                        <em>Tentative effectuée le {{ aspirant.createdAt|date('d-m-Y H:i:s') }}</em>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-    <a href="{{ path('app_backend_aspirant_index') }}">back to list</a>
 
-    <a href="{{ path('app_backend_aspirant_edit', {'id': aspirant.id}) }}">edit</a>
-
-    {{ include('backend_aspirant/_delete_form.html.twig') }}
+    </div>
 {% endblock %}
