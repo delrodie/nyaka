@@ -31,71 +31,87 @@
                     <div class="card">
                         <div class="card-header">
                             <div class="row">
-                                <div class="col"><h5 class="mb-2 fw-semibold fs-4">Les détails de </h5></div>
+                                <div class="col"><h5 class="mb-2 fw-semibold fs-4">Les détails de {{ aspirant.nom }} {{ aspirant.prenoms }}</h5></div>
                             </div>
 
                         </div>
                         <div class="card-body">
-                            <div class="card">
-                                <div class="row mt-3">
-                                    <div class="col-4">Matricule</div>
-                                    <div class="col-8">{{ aspirant.matricule }}</div>
-                                </div>
-                                <div class="row mt-3">
-                                    <div class="col-4">Nom</div>
-                                    <div class="col-8">{{ aspirant.nom }}</div>
-                                </div>
-                                <div class="row mt-3">
-                                    <div class="col-4">Prenoms</div>
-                                    <div class="col-8">{{ aspirant.prenoms }}</div>
-                                </div>
-                                <div class="row mt-3">
-                                    <div class="col-4">Sexe</div>
-                                    <div class="col-8">{{ aspirant.sexe }}</div>
-                                </div>
-                                <div class="row mt-3">
-                                    <div class="col-4">Contact</div>
-                                    <div class="col-8">{{ aspirant.contact }}</div>
-                                </div>
-                                <div class="row mt-3">
-                                    <div class="col-4">Urgence</div>
-                                    <div class="col-8">{{ aspirant.urgence }} / {{ aspirant.contactUrgence }}</div>
-                                </div>
-                                <div class="row mt-3">
-                                    <div class="col-4">Vicariat</div>
-                                    <div class="col-8">{{ aspirant.section.doyenne.vicariat.nom }}</div>
-                                </div>
-                                <div class="row mt-3">
-                                    <div class="col-4">Doyenne</div>
-                                    <div class="col-8">{{ aspirant.section.doyenne.nom }}</div>
-                                </div>
-                                <div class="row mt-3">
-                                    <div class="col-4">Paroisse</div>
-                                    <div class="col-8">{{ aspirant.section.paroisse }}</div>
-                                </div>
-                                <div class="row mt-3">
-                                    <div class="col-4">Grade</div>
-                                    <div class="col-8">{{ aspirant.grade.nom }}</div>
-                                </div>
-                                <div class="row mt-3">
-                                    <div class="col-4">Taille</div>
-                                    <div class="col-8">{{ aspirant.taille }}</div>
-                                </div>
-                                <div class="row mt-3">
-                                    <div class="col-4">Montant payé</div>
-                                    <div class="col-8">{{ aspirant.montant|number_format(0,'','.') }}</div>
-                                </div>
-                                <div class="row mt-3">
-                                    <div class="col-4">Wave CheckOut Satus</div>
-                                    <div class="col-8">{{ aspirant.waveCheckoutStatus }}</div>
-                                </div>
-                                <div class="row mt-3">
-                                    <div class="col-4">Wave paiement</div>
-                                    <div class="col-8">{{ aspirant.wavePaymentStatus }}</div>
-                                </div>
-                                <div class="row mt-3">
-                                    <div class="col-12">
-                                        <em>Tentative effectuée le {{ aspirant.createdAt|date('d-m-Y H:i:s') }}</em>
+                            <div class="row">
+                                <div class="col-6 offset-3">
+                                    <div class="card">
+                                        <div class="row mt-3">
+                                            <div class="col-4">Matricule</div>
+                                            <div class="col-8">{{ aspirant.matricule }}</div>
+                                        </div>
+                                        <div class="row mt-3">
+                                            <div class="col-4">Nom</div>
+                                            <div class="col-8">{{ aspirant.nom }}</div>
+                                        </div>
+                                        <div class="row mt-3">
+                                            <div class="col-4">Prenoms</div>
+                                            <div class="col-8">{{ aspirant.prenoms }}</div>
+                                        </div>
+                                        <div class="row mt-3">
+                                            <div class="col-4">Sexe</div>
+                                            <div class="col-8">{{ aspirant.sexe }}</div>
+                                        </div>
+                                        <div class="row mt-3">
+                                            <div class="col-4">Contact</div>
+                                            <div class="col-8">{{ aspirant.contact }}</div>
+                                        </div>
+                                        <div class="row mt-3">
+                                            <div class="col-4">Urgence</div>
+                                            <div class="col-8">{{ aspirant.urgence }} / {{ aspirant.contactUrgence }}</div>
+                                        </div>
+                                        <div class="row mt-3">
+                                            <div class="col-4">Vicariat</div>
+                                            <div class="col-8">{{ aspirant.section.doyenne.vicariat.nom }}</div>
+                                        </div>
+                                        <div class="row mt-3">
+                                            <div class="col-4">Doyenne</div>
+                                            <div class="col-8">{{ aspirant.section.doyenne.nom }}</div>
+                                        </div>
+                                        <div class="row mt-3">
+                                            <div class="col-4">Paroisse</div>
+                                            <div class="col-8">{{ aspirant.section.paroisse }}</div>
+                                        </div>
+                                        <div class="row mt-3">
+                                            <div class="col-4">Grade</div>
+                                            <div class="col-8">{{ aspirant.grade.nom }}</div>
+                                        </div>
+                                        <div class="row mt-3">
+                                            <div class="col-4">Taille</div>
+                                            <div class="col-8">{{ aspirant.taille }}</div>
+                                        </div>
+                                        <div class="row mt-3">
+                                            <div class="col-4">Montant payé</div>
+                                            <div class="col-8">{{ aspirant.montant|number_format(0,'','.') }}</div>
+                                        </div>
+                                        <div class="row mt-3">
+                                            <div class="col-4">Wave CheckOut Satus</div>
+                                            <div class="col-8">
+                                                {% if aspirant.waveCheckoutStatus === 'Complete' %}
+                                                    <span class="badge bg-success">{{ aspirant.waveCheckoutStatus }}</span>
+                                                {% else %}
+                                                    <span class="badge bg-danger">{{ aspirant.waveCheckoutStatus }}</span>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                        <div class="row mt-3">
+                                            <div class="col-4">Wave paiement</div>
+                                            <div class="col-8">
+                                                {% if aspirant.wavePaymentStatus === 'succeeded' %}
+                                                    <span class="badge bg-success">{{ aspirant.wavePaymentStatus }}</span>
+                                                {% else %}
+                                                    <span class="badge bg-danger">{{ aspirant.wavePaymentStatus }}</span>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                        <div class="row mt-3">
+                                            <div class="col-12">
+                                                <em>Tentative effectuée le {{ aspirant.createdAt|date('d-m-Y H:i:s') }}</em>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
