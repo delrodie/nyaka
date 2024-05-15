@@ -112,7 +112,7 @@
                                                 <em>Tentative effectuée le {{ aspirant.createdAt|date('d-m-Y H:i:s') }}</em>
                                             </div>
                                         </div>
-                                        <div class="row mt-5">
+                                        <div class="row mt-5 mb-5">
                                             <div class="col text-center">
                                                 <a href="{{ path('app_backend_aspirant_index') }}" class="btn btn-outline-secondary">Retour à la liste</a>
                                                 {% if aspirant.wavePaymentStatus == 'succeeded' %}
