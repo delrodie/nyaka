@@ -67,7 +67,7 @@ class RecuController extends AbstractController
             return  "HTTP Error ".$response->getStatusCode();
         }
 
-        $data = $response->toArray();
+        $data = $response->toArray(); dd($data);
 
         $aspirant->setWaveCheckoutStatus($data['checkout_status']);
         $aspirant->setWavePaymentStatus($data['payment_status']);
