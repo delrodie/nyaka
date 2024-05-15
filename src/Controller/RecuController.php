@@ -67,12 +67,16 @@ class RecuController extends AbstractController
             return  "HTTP Error ".$response->getStatusCode();
         }
 
-        $data = $response->toArray(); dd($data);
+        $data = $response->toArray();
 
-        $aspirant->setWaveCheckoutStatus($data['checkout_status']);
-        $aspirant->setWavePaymentStatus($data['payment_status']);
-        $aspirant->setWaveWhenCompleted($data['when_completed']);
-        $aspirant->setWaveTransactionId($data['transaction_id']);
+        if ($data['checkout_status'])
+            $aspirant->setWaveCheckoutStatus($data['checkout_status']);
+        if ($data['payment_status'])
+            $aspirant->setWavePaymentStatus($data['payment_status']);
+        if ($data['when_completed'])
+            $aspirant->setWaveWhenCompleted($data['when_completed']);
+        if ($data['transaction_id'])
+            $aspirant->setWaveTransactionId($data['transaction_id']);
 
         $this->entityManager->flush();
 
