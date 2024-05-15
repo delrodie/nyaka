@@ -90,7 +90,7 @@
                                         <div class="row mt-3">
                                             <div class="col-4">Wave CheckOut Satus</div>
                                             <div class="col-8">
-                                                {% if aspirant.waveCheckoutStatus === 'Complete' %}
+                                                {% if aspirant.waveCheckoutStatus == 'Complete' %}
                                                     <span class="badge bg-success">{{ aspirant.waveCheckoutStatus }}</span>
                                                 {% else %}
                                                     <span class="badge bg-danger">{{ aspirant.waveCheckoutStatus }}</span>
@@ -100,7 +100,7 @@
                                         <div class="row mt-3">
                                             <div class="col-4">Wave paiement</div>
                                             <div class="col-8">
-                                                {% if aspirant.wavePaymentStatus === 'succeeded' %}
+                                                {% if aspirant.wavePaymentStatus == 'succeeded' %}
                                                     <span class="badge bg-success">{{ aspirant.wavePaymentStatus }}</span>
                                                 {% else %}
                                                     <span class="badge bg-danger">{{ aspirant.wavePaymentStatus }}</span>
