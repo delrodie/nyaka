@@ -108,8 +108,16 @@
                                             </div>
                                         </div>
                                         <div class="row mt-3">
-                                            <div class="col-12">
+                                            <div class="col-12 text-center">
                                                 <em>Tentative effectuée le {{ aspirant.createdAt|date('d-m-Y H:i:s') }}</em>
+                                            </div>
+                                        </div>
+                                        <div class="row mt-5">
+                                            <div class="col text-center">
+                                                <a href="{{ path('app_backend_aspirant_index') }}" class="btn btn-outline-secondary">Retour à la liste</a>
+                                                {% if aspirant.wavePaymentStatus == 'succeeded' %}
+                                                    <a href="{{ path('app_recu_show', {'matricule': aspirant.matricule}) }}" class="btn btn-primary" target="_blank">Reçu</a>
+                                                {% endif %}
                                             </div>
                                         </div>
                                     </div>
