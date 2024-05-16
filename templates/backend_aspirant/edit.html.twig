@@ -1,13 +1,84 @@
-{% extends 'base.html.twig' %}
+{% extends 'backend_layout.html.twig' %}
 
-{% block title %}Edit Aspirant{% endblock %}
+{% block title %}{{ aspirant.nom }} {{ aspirant.prenoms }}{% endblock %}
 
 {% block body %}
-    <h1>Edit Aspirant</h1>
+    <div class="container-fluid">
+        <div class="card bg-light-info shadow-none position-relative overflow-hidden">
+            <div class="card-body px-4 py-3">
+                <div class="row align-items-center">
+                    <div class="col-9">
+                        <h4 class="fw-semibold mb-8">Gestion des grades</h4>
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a class="text-muted" href="#">Modules</a></li>
+                                <li class="breadcrumb-item"><a class="text-muted" href="#">Participants</a></li>
+                                <li class="breadcrumb-item" aria-current="page">Confirmés</li>
+                            </ol>
+                        </nav>
+                    </div>
+                    <div class="col-3">
+                        <div class="text-center mb-n5">
+                            <span class="head-icon"><i class="ti-package"></i></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <section>
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="row">
+                                <div class="col"><h5 class="mb-2 fw-semibold fs-4">Formulaire</h5></div>
 
-    {{ include('backend_aspirant/_form.html.twig', {'button_label': 'Update'}) }}
+                            </div>
 
-    <a href="{{ path('app_backend_aspirant_index') }}">back to list</a>
+                        </div>
+                        <div class="card-body">
+                            {{ include('backend_aspirant/_form.html.twig', {'button_label': 'Modifier'}) }}
 
-    {{ include('backend_aspirant/_delete_form.html.twig') }}
+                            {{ include('backend_aspirant/_delete_form.html.twig') }}
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
 {% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <style>
+        .select2-container .select2-selection--single {
+            height: calc(2.25rem + 2px);
+            padding: 0.375rem 0.75rem;
+        }
+
+        .select2-container--bootstrap-5 .select2-selection--single .select2-selection__rendered {
+            line-height: calc(2.25rem + 2px);
+        }
+
+        .select2-container--bootstrap-5 .select2-selection--single .select2-selection__arrow {
+            height: calc(2.25rem + 2px);
+            right: 0.75rem;
+        }
+
+    </style>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('.select2').select2({
+                // theme: 'bootstrap-5'
+            });
+        });
+    </script>
+{% endblock %}
+
+

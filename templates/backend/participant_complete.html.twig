@@ -69,7 +69,11 @@
                                             <td class="">{{ aspirant.section.doyenne.vicariat.nom }}</td>
                                             <td class="">{{ aspirant.section.doyenne.nom }}</td>
                                             <td class="">{{ aspirant.section.paroisse }}</td>
-                                            <td class="">{{ aspirant.nom }} {{ aspirant.prenoms }}</td>
+                                            <td class="">
+                                                <a href="{{ path('app_backend_aspirant_edit', {'id': aspirant.id}) }}">
+                                                    {{ aspirant.nom }} {{ aspirant.prenoms }}
+                                                </a>
+                                            </td>
                                             <td class="text-center">{{ aspirant.matricule }}</td>
                                             <td class="text-center">{{ aspirant.sexe }}</td>
                                             <td>{{ aspirant.contact }}</td>

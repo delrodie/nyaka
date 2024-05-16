@@ -1,4 +1,23 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+    <div class="row form-group">
+        <div class="col-6 mt-3">{{ form_row(form.nom)}}</div>
+        <div class="col-6 mt-3">{{ form_row(form.prenoms) }}</div>
+        <div class="col-4 mt-3">{{ form_row(form.matricule) }}</div>
+        <div class="col-4 mt-3">{{ form_row(form.sexe) }}</div>
+        <div class="col-4 mt-3">{{ form_row(form.contact) }}</div>
+        <div class="col-6 mt-3">{{ form_row(form.urgence) }}</div>
+        <div class="col-6 mt-3">{{ form_row(form.contactUrgence) }}</div>
+        <div class="col-6 mt-3">{{ form_row(form.taille) }}</div>
+        <div class="col-6 mt-3">{{ form_row(form.montant) }}</div>
+        <div class="col-6 mt-3">{{ form_row(form.grade) }}</div>
+        <div class="col-6 mt-3">{{ form_row(form.section) }}</div>
+    </div>
+    <div class="row mt-5">
+        <div class="col-12 text-center">
+            {{ form_widget(form) }}
+            <a href="{{ path('app_backend_participant_confirme') }}" class="btn btn-outline-secondary btn-lg">Annuler</a>
+            <button class="btn btn-primary btn-lg">{{ button_label|default('Save') }}</button>
+        </div>
+    </div>
+
 {{ form_end(form) }}

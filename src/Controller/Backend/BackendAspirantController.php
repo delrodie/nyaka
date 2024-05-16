@@ -59,7 +59,9 @@ class BackendAspirantController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_backend_aspirant_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_recu_show', [
+                'matricule' => $aspirant->getMatricule()
+            ], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('backend_aspirant/edit.html.twig', [
