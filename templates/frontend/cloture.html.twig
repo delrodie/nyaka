@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} - Clôture des inscriptions {% endblock %}
+
+{% block body %}
+    <div class="overflow-hidden">
+        <div class="logo">
+            <div class="logo-icon" data-aos="fade-right" data-aos-easing="ease-in-sine" data-aos-duration="2000">
+                <img src="{{ absolute_url(asset('frontend/img/logo-cvav.png')) }}" alt="" class="img-fluid">
+            </div>
+            <div class="logo-text" data-aos="fade-left" data-aos-easing="ease-in-sine" data-aos-duration="2000">
+                <h2>
+                    Coeurs Vaillants Ames Vaillantes
+                </h2>
+                <h3>Dicosèse d'Abidjan</h3>
+            </div>
+        </div>
+    </div>
+    <div class="activite">
+        <div class="activite-icon" data-aos="zoom-in-up" data-aos-easing="ease-in-back" data-aos-duration="3000">
+            <img src="{{ absolute_url(asset('frontend/img/sad.png')) }}" alt="" class="img-fluid">
+        </div>
+        <div class="activite-text" data-aos="zoom-out-down" data-aos-easing="ease-in-back" data-aos-duration="3000">
+            <h3 class="titre">Oups!!</h3>
+            <h6 class="theme">
+                La plateforme est fermée, les isncriptions sont closes
+
+            </h6>
+
+        </div>
+{#        <div class="call-action" style="margin-top: 80px;">#}
+{#            <a href="{{ absolute_url(path('app_participation_index')) }}" class="btnAction">#}
+{#                Je reprends#}
+{#            </a>#}
+{#        </div>#}
+    </div>
+{% endblock %}

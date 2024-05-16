@@ -22,6 +22,9 @@ class ParticipationController extends AbstractController
     #[Route('/', name: 'app_participation_index')]
     public function index(): Response
     {
+        if ($this->allRepositories->getClotureStatut())
+            return $this->redirectToRoute('app_cloture');
+
         return $this->render('frontend/participation_section.html.twig',[
             'vicariats' => $this->allRepositories->getAllVicariat("ASC"),
         ]);

@@ -4,11 +4,13 @@ namespace App\Service;
 
 use App\Entity\Aspirant;
 use App\Repository\AspirantRepository;
+use App\Repository\ClotureRepository;
 use App\Repository\DoyenneRepository;
 use App\Repository\GradeRepository;
 use App\Repository\SectionRepository;
 use App\Repository\VicariatRepository;
 use phpDocumentor\Reflection\Types\String_;
+use phpDocumentor\Reflection\Types\True_;
 
 class AllRepositories
 {
@@ -17,7 +19,8 @@ class AllRepositories
         private DoyenneRepository $doyenneRepository,
         private SectionRepository $sectionRepository,
         private GradeRepository $gradeRepository,
-        private AspirantRepository $aspirantRepository
+        private AspirantRepository $aspirantRepository,
+        private ClotureRepository $clotureRepository
     )
     {
     }
@@ -226,6 +229,14 @@ class AllRepositories
     public function getAllAspirantBySectionID($id)
     {
         return $this->aspirantRepository->getAllBySection($id, 'complete');
+    }
+
+    public function getClotureStatut(): bool
+    {
+        $cloture = $this->clotureRepository->findOneBy(['statut' => true]);
+        if ($cloture) return true;
+
+        return false;
     }
 
 }
