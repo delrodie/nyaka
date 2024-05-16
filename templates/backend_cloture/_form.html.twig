@@ -1,0 +1,19 @@
+{{ form_start(form, {"attr":{"id":'clotureForm'}}) }}
+    <div class="row">
+        <div class="col-12 mt-3 text-center">
+            {{ form_widget(form.statut, {"attr":{"class":'btn-check'}}) }}
+            {% if cloture.statut %}
+                {{ form_label(form.statut, "Réactiver les inscriptions", {"label_attr": {"class": "btn btn-outline-primary btn-lg"}}) }}
+            {% else %}
+                {{ form_label(form.statut, "Activer la clôture des inscriptions", {"label_attr": {"class": "btn btn-outline-primary btn-lg"}}) }}
+            {% endif %}
+
+        </div>
+        <div class="col-12 mt-3">{{ form_widget(form) }}</div>
+{#        <div class="col-12 mt-5">#}
+{#            <button class="btn btn-primary">{{ button_label|default('Enregistrer') }}</button>#}
+{#        </div>#}
+    </div>
+
+
+{{ form_end(form) }}

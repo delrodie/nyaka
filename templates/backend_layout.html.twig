@@ -163,7 +163,16 @@
                             </li>
                         </ul>
                     </li>
-
+                    {% endif %}
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="{{ absolute_url(path('app_backend_cloture_new')) }}" aria-expanded="false">
+                              <span>
+                                <i class="ti-close"></i>
+                              </span>
+                            <span class="hide-menu">Cloture</span>
+                        </a>
+                    </li>
+                    {% if is_granted('ROLE_SUPER_ADMIN') %}
                     <!-- PARAMETRES -->
 
                     <li class="nav-small-cap">

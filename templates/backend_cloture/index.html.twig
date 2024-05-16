@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Cloture index{% endblock %}
+
+{% block body %}
+    <h1>Cloture index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Statut</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for cloture in clotures %}
+            <tr>
+                <td>{{ cloture.id }}</td>
+                <td>{{ cloture.statut ? 'Yes' : 'No' }}</td>
+                <td>
+                    <a href="{{ path('app_backend_cloture_show', {'id': cloture.id}) }}">show</a>
+                    <a href="{{ path('app_backend_cloture_edit', {'id': cloture.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_backend_cloture_new') }}">Create new</a>
+{% endblock %}
